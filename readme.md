@@ -847,20 +847,18 @@
 
 
 9. <a name="comments">Comments</a>
+  - Single line above the code that is subject (except for long expressions like conditions).
+  - Comment is a sentence - start it with capital leter, end with period.
+  - Use multiline comments only for API documentation.
+  - Check the [JSDuck documentation guide](http://dev.ckeditor.com/wiki/CodeDocumentation).
+  - You can use JSDuck documentation style for private functions, but then use single line comments.
+  - Justify end line comments with tabs:
 
-    * Single line above the code that is subject (except for long expressions like conditions).
-    * Comment is a sentence - start it with capital leter, end with period.
-    * Use multiline comments only for API documentation.
-    * Check the [JSDuck documentation guide](http://dev.ckeditor.com/wiki/CodeDocumentation).
-    * Justify end line comments with tabs:
+            if ( some != really.complex &&      // Comment line 1.
+                condition || with &&            // Comment line 2.
+                ( multiple == !lines ) )        // Comment line 3.
 
-        if ( some != really.complex &&      // Comment line 1.
-            condition || with &&            // Comment line 2.
-            ( multiple == !lines ) )        // Comment line 3.
-
-        // Of course it's better to avoid this spaghetti at all.
-
-    * You can use JSDuck documentation style for private functions, but then use single line comments.
+            // Of course it's better to avoid this spaghetti at all.
 
 
 ----------
