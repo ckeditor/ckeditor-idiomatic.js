@@ -219,7 +219,7 @@
     ```
 
 
-    D. Quotes
+    C. Quotes
 
     Always use single quotes in JavaScript, but double quotes in HTML.
 
