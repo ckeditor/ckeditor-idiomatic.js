@@ -219,23 +219,6 @@
     ```
 
 
-    C. Exceptions
-
-    ```javascript
-
-    // No extra spaces in IIFE.
-    (function() {
-
-    })();
-
-    // But:
-    (function( document ) {
-
-    })( window.document );
-
-    ```
-
-
     D. Quotes
 
     Always use single quotes in JavaScript, but double quotes in HTML.
@@ -548,8 +531,8 @@
     // 5.1.1
     // A Practical Module
 
-    (function() {
-        var Module = (function() {
+    ( function() {
+        var Module = ( function() {
             var data = "secret";
 
             return {
@@ -574,13 +557,13 @@
                     return ( data = value );
                 }
             };
-        })();
+        } )();
 
         // Other things might happen here.
 
         // Expose our module to the global object.
         CKEDITOR.module = Module;
-    })();
+    } )();
 
     ```
 
@@ -589,7 +572,7 @@
     // 5.2.1
     // A Practical Constructor
 
-    (function() {
+    ( function() {
         function Ctor( foo ) {
             this.foo = foo;
 
@@ -608,7 +591,7 @@
 
         // Expose our constructor to the global object.
         CKEDITOR.ctor = Ctor;
-    })();
+    } )();
 
     ```
 
