@@ -1,9 +1,8 @@
-# Code style guide for [CKEditor](https://github.com/ckeditor/ckeditor-dev)
+# 1. Introduction
 
 **This document is based on [Idiomatic.JS](https://github.com/rwldrn/idiomatic.js).** However, it contains many clarifications and rules specific for projects maintained by [CKSource](http://cksource.com/) like [CKEditor](https://github.com/ckeditor/ckeditor-dev).
 
-
-## Mottos
+## 1.1. Mottos
 
 > ### All code in any code-base should look like a single person typed it, no matter how many people contributed.
 
@@ -15,834 +14,1113 @@
 > ### "Part of being a good steward to a successful project is realizing that writing code for yourself is a Bad Idea™. If thousands of people are using your code, then write your code for maximum clarity, not your personal preference of how to get clever within the spec."
 >_Idan_ _Gazit_
 
+## 1.2. Table of contents
 
-## Table of Contents
+* [Code style guide](#2-code-style-guide)
+	* [Whitespace](#21-whitespace)
+	* [Beautiful Syntax](#22-beautiful-syntax)
+	* [Type Checking (Courtesy jQuery Core Style Guidelines)](#23-type-checking)
+	* [Conditional Evaluation](#24-conditional-evaluation)
+	* [Practical Style](#25-practical-style)
+	* [Naming](#26-naming)
+	* [Faces of `this`](#27-faces-of-this)
+	* [Misc](#28-misc)
+	* [Native & Host Objects](#29-native--host-objects)
+	* [Comments](#210-comments)
+* [Tests](#3-tests)
+	* [Manual tests](#31-manual-tests)
 
-* [Whitespace](#whitespace)
-* [Beautiful Syntax](#spacing)
-* [Type Checking (Courtesy jQuery Core Style Guidelines)](#type)
-* [Conditional Evaluation](#cond)
-* [Practical Style](#practical)
-* [Naming](#naming)
-* [Misc](#misc)
-* [Native & Host Objects](#native)
-* [Comments](#comments)
-* [One Language Code](#language)
+# 2. Code style guide
 
+## 2.1 Whitespace
+- Always use tabs. Never use spaces for indentation (for both - code and comments).
+- Tab is 4 spaces.
+- Do not leave trailing spaces (**note:** empty lines should not contain any spaces).
+- Always use LF line endings. Never use CRLF.
+- If your editor supports it, always work with the "show invisibles" setting turned on. The benefits of this practice are:
+  - Enforced consistency
+  - Eliminating end of line whitespace
+  - Eliminating blank line whitespace
+  - Commits and diffs that are easier to read
 
+Related settings for Sublime users:
 
-------------------------------------------------
+	{
+		// Defaults:
+		"tab_size": 4,
+		"translate_tabs_to_spaces": false,
 
-
-## Code style guide
-
-
-1. <a name="whitespace">Whitespace</a>
-  - Always use tabs. Never use spaces for indentation (for both - code and comments).
-  - Tab is 4 spaces.
-  - Do not leave trailing spaces (**note:** empty lines should not contain any spaces).
-  - Always use LF line endings. Never use CRLF.
-  - If your editor supports it, always work with the "show invisibles" setting turned on. The benefits of this practice are:
-      - Enforced consistency
-      - Eliminating end of line whitespace
-      - Eliminating blank line whitespace
-      - Commits and diffs that are easier to read
-
-  Related settings for Sublime users:
-
-        {
-            // Defaults:
-            "tab_size": 4,
-            "translate_tabs_to_spaces": false,
-
-            // Additional settings:
-            "default_line_ending": "unix",
-            "trim_trailing_white_space_on_save": true
-        }
+		// Additional settings:
+		"default_line_ending": "unix",
+		"trim_trailing_white_space_on_save": true
+	}
 
 
-2. <a name="spacing">Beautiful Syntax</a>
+## 2.2. Beautiful syntax
 
-    A. Parens, Braces, Linebreaks
+### 2.2.1. Parens, Braces, Linebreaks
 
-    ```javascript
+#### 2.2.1.1. Use whitespace to promote readability
 
-    // 2.A.1.1
-    // Use whitespace to promote readability
+```javascript
+if ( condition ) {
+	// statements
+}
 
-    if ( condition ) {
-        // statements
-    }
+if ( true ) {
+  // statements
+} else {
+  // statements
+}
 
-    if ( true ) {
-      // statements
-    } else {
-      // statements
-    }
+if ( true ) {
+	// statements
+}
+// Comments regarding what "else" means and does.
+else {
+	// statements
+}
 
-    if ( true ) {
-        // statements
-    }
-    // Comments regarding what "else" means and does.
-    else {
-        // statements
-    }
+while ( condition ) {
+	// statements
+}
 
-    while ( condition ) {
-        // statements
-    }
+for ( var i = 0; i < 100; i++ ) {
+	// statements
+}
 
-    for ( var i = 0; i < 100; i++ ) {
-        // statements
-    }
+try {
+	// statements
+} catch ( e ) {
+	// statements
+}
 
-    try {
-        // statements
-    } catch ( e ) {
-        // statements
-    }
-    ```
+```
 
+#### 2.2.1.2. Always use brackets even for a single line statements
 
-    B. Assignments, Declarations, Functions (Named, Expression, Constructor)
+```javascript
+// Bad
+if ( true ) // statement
 
-    ```javascript
+// Good
+if ( true ) {
+	// statement
+}
 
-    // 2.B.1.1
-    // Variables
-    var foo = 'bar',
-        num = 1,
-        undef;
+// Bad
+if ( false ) // statement
+else // statement
 
-    // Literal notations:
-    var array = [],
-        object = {};
+// Good
+if ( false ) {
+	// statement
+} else {
+	// statement
+}
+```
 
+### 2.2.2. Assignments, Declarations, Functions
 
-    // 2.B.1.2
-    // Using only one `var` per scope (function) promotes readability
-    // and keeps your declaration list free of clutter (also saves a few keystrokes).
+#### 2.2.2.1. Declaring variables
 
-        // Comment on this.
-    var foo = '',
-        bar = '',
-        // Comment on this.
-        quux;
+```javascript
+var foo = 'bar',
+	num = 1,
+	undef;
 
-    // 2.B.1.3
-    // Try to group `var` statements. Preferably in the beginning
-    // of their respective scope (function), but also don't go crazy with this.
-    // Avoid declaring new variable every few lines of code.
-    // In case of long functions make sure to declare all common variables
-    // (like loop counters, `el`, `range`, etc.) in the beginning of scope.
-    // Same goes for const and let from ECMAScript 6.
+// Literal notations:
+var array = [],
+	object = {};
+```
 
-    // Bad.
-    function foo() {
-        // 2 statements
+#### 2.2.2.2. Single line per declaration
 
-        var bar = '';
+Declaring one variable per line improves debugging experience. Multiple variables declared in the same line won't allow you to place breakpoint at the definition computation. The same goes to object literals.
 
-        // 2 statements
+```javascript
+// Bad
+var foo = 'foo', bar = 'bar',
+	object = {
+		foo: 'foo', bar = 'bar' // Also bad
+	};
 
-        var foo = '';
+// Good
+var foo = 'foo',
+	bar = 'bar',
+	object = {
+		foo: 'foo',
+		bar: 'bar'
+	};
 
-        // 50 statements
+```
 
-        var bom = '';
+#### 2.2.2.3. One variable per scope
 
-        // some statements
-    }
+Using only one variable per scope (function) promotes readability and keeps your declaration list free of clutter (also saves a few keystrokes). However, don't overuse it. If a scope have multiple lines of code, it may be more readable to declare variable later when it's defined or used than expect developer to scroll up to declaration list instead.
 
-    // Good
-    function foo() {
-        var bar = '',
-            foo = '';
+```javascript
+// Bad.
+function foo() {
+	// 2 statements
 
-        // 50 statements
+	var bar = '';
 
-        var bom = '';   // Assuming that bom isn't needed before, there's no sense
-                        // in grouping it with the first group.
+	// 2 statements
 
-        // some statements
-    }
+	var foo = '';
 
+	// 10 statements
 
-    // 2.B.2.1
-    // Named Function Declaration
-    function foo( arg1, argN ) {
+	var bom = '';
 
-    }
+	// some statements
+}
 
-    // Usage.
-    foo( arg1, argN );
+// Good
+function foo() {
+	var bar = '',
+		foo = '';
 
+	// 10 statements
 
-    // 2.B.2.2
-    // Named Function Declaration.
-    function square( number ) {
-        return number * number;
-    }
+	var bom = '';   // Assuming that bom isn't needed before, there's no sense
+					// in grouping it with the first group.
 
-    // Usage.
-    square( 10 );
+	// some statements
+}
+```
 
-    // Really contrived continuation passing style.
-    function square( number, callback ) {
-        callback( number * number );
-    }
+#### 2.2.2.4. Function declaration
 
-    square( 10, function( square ) {
-        // callback statements
-    } );
+Prefer function declaration instead of [function expression](#2225-function-expression) to avoid issues with executing function before it has been defined.
 
+```javascript
+function foo( arg1, argN ) {
 
-    // 2.B.2.3
-    // Function Expression
+}
+
+// Usage.
+foo( arg1, argN );
+
+// Real life example.
+function square( number ) {
+	return number * number;
+}
+
+// Usage.
+square( 10 );
+```
+
+#### 2.2.2.5. Function expression
+
+Prefer [function declaration](#2224-function-declaration) when possible.
+
+```javascript
     var square = function( number ) {
-        // Return something valuable and relevant.
         return number * number;
     };
+```
+
+#### 2.2.2.6. Continuation-Passing style
+
+If your function should be executed asynchorously or requires additional callback (e.g. filter function) as an function argument, pass it as the last argument in function signature.
+
+```javascript
+// Declaration.
+function square( number, callback ) {
+	callback( number * number );
+}
+
+// Usage.
+square( 10, function( square ) {
+	// callback statements
+} );
+```
+
+#### 2.2.2.7 Constructor declaration
+```javascript
+function FooBar( options ) {
+	this.options = options;
+}
+
+// Usage.
+var fooBar = new FooBar( {
+	a: 'alpha'
+} );
+
+fooBar.options; // -> { a: 'alpha' }
+```
+
+### 2.2.3. Code structure
+
+#### 2.2.3.1. Public API
+
+Exposing public API should have much higher priority in file structure than private members. It improves API discoverability and hides private members.
+
+```javascript
+// Simple module.
+CKEDITOR.module1 = {
+	pubFoo: function() {
+		this.privFoo();
+	},
+
+	pubBar: function() {
+		this.privBar();
+	},
+
+	privFoo: function() {
+		// ...
+	},
+
+	privBar: function() {
+		// ...
+	}
+};
+
+// Using module pattern.
+var module = ( function() {
+	// Exposing public API.
+	return {
+		foo: foo,
+		bar: bar
+	}
 
+	function foo() {
+		bar();
+	}
 
-    // 2.B.2.4
-    // Constructor Declaration
-    function FooBar( options ) {
-        this.options = options;
-    }
+	// Private helpers.
+	function bar() {
+		// ...
+	}
+} )();
+```
 
-    // Usage.
-    var fooBar = new FooBar( { a: 'alpha' } );
+#### 2.2.3.2. Helper functions
 
-    fooBar.options; // -> { a: 'alpha' }
+When extracting helper function, move it right after the first usage inside the nearest scope which won't affect code performance and memory usage. In most cases, you want to keep helper functions on the same scope level as a public one unless they are used somewhere else in the same file.
 
-    ```
+```javascript
+CKEDITOR.module1 = {
+	doSomething: function() {
+		// Good
+		foo();
 
+		// Bad thus the function object will be created every time when doSomething function executed.
+		bar();
 
-    C. Quotes
+		function bar() {
+			// ...
+		}
+	}
+};
 
-    Always use single quotes in JavaScript, but double quotes in HTML.
+function foo() {
+	baz();
+	quix();
+}
 
+function baz() {
+	// ...	
+}
 
-3. <a name="type">Type Checking</a>
+function quix() {
+	// ...
+}
 
-    A. Actual Types
+CKEDITOR.module2 = {
+	doSomething: function() {
+		// Note that despite this function is used in another module later,
+		// it has been correctly declared as close as possible to the first usage.
+		foo();
+	}
+}
+```
 
-    String:
+Note that the same practice applies to objects, however, keep in mind that [public API has higher priority than private helpers](#2231-public-api).
 
-        typeof variable == 'string'
+```javascript
+CKEDITOR.module1 = {
+	foo: function() {
+		this.bar();
+	},
 
-    Number:
+	bar: function() {
+		// ...
+	},
 
-        typeof variable == 'number'
+	baz: function() {
+		// ...
+	}
+};
+```
 
-    Boolean:
+#### 2.2.3.3. Configuration members
 
-        typeof variable == 'boolean'
+Configuration members exposed by `CKEDITOR.config` object should be moved at the end of the code file. It's adapted practice in CKEditor code base which improves configuration options discoverability.
 
-    Object:
+```javascript
+CKEDITOR.plugins.add( 'myplugin', definition );
 
-        typeof variable == 'object'
+// ... some code goes here ...
+// ... more lines of code ...
+// ... just don't wake up Cthulhu ...
 
-    Array:
+CKEDITOR.config.foo = 'foo';
+CKEDITOR.config.bar = 'bar';
+```
 
-        // In CKEditor:
-        CKEDITOR.tools.isArray( arrayLikeObject )
-        // In other cases:
-        Array.isArray( arrayLikeObject )
-        (wherever possible)
+### 2.2.4. Quotes
 
-    Node:
+Always use single quotes in JavaScript, but double quotes in HTML.
 
-        elem.nodeType == 1
+## 2.3. Type checking
 
-    null:
+### 2.3.1. Actual Types
 
-        variable === null
+String:
 
-    null or undefined:
+```javascript
+typeof variable === 'string'
+```
 
-        variable == null
+Number:
 
-    undefined:
+```javascript
+typeof variable === 'number'
+```
 
-        Global Variables:
+Boolean:
 
-            typeof variable == 'undefined'
-            // Or:
-            variable === undefined
+```javascript
+typeof variable === 'boolean'
+```
 
-        Properties:
+Object:
 
-            object.prop === undefined
-            'prop' in object
-            !object.prop // If you know what you do.
+```javascript
+typeof variable === 'object'
+```
 
+Array:
 
-    B. Coerced Types
+```javascript
+// In CKEditor:
+CKEDITOR.tools.isArray( arrayLikeObject )
+// In other cases:
+Array.isArray( arrayLikeObject )
+(wherever possible)
+```
 
-    Use `+`, `!!` and `+ ''` for type coercion whenever possible. However, your code
-    should not look like assembly or CoffeeScript so do not overuse tricks.
+Node:
 
-    Here are some common cases along with coercions:
+```javascript
+// In CKEditor:
+elem.type == CKEDITOR.NODE_ELEMENT
+// In other cases:
+elem.nodeType == 1
+```
 
+null:
 
-    ```javascript
+```javascript
+variable === null
+```
 
-    // 3.B.2.1
+undefined:
 
-    var number = 1,
-        string = '1',
-        bool = false;
+```javascript
+variable === undefined
+```
 
-    number;
-    // 1
+#### 2.3.2. Coerced Types
 
-    number + '';
-    // '1'
+Use coersion with caution. In most cases prefer explicit type casting than using implicit operator coersion. Note that some practices are more common than the others, so use common sense to choose correct casting method.
 
-    string;
-    // '1'
+```javascript
+var number = 1,
+	string = '1',
+	bool = false;
 
-    +string;
-    // 1
+number;
+// 1
 
-    +string++;
-    // 1
+// Using number to string coersion with normal sentence
+number + 'st place on the podium';
+// '1st place on the podium'
+// ...is fine and readable. But instead of doing...
+number + '';
+// '1'
+// ...prefer explicit parsing to string
+String( number );
+// '1'
 
-    string;
-    // 2
+string;
+// '1'
 
-    bool;
-    // false
+// Insead of...
++string;
+// 1
+// ...prefer explicit parsing to number
+Number( string );
+// 1
 
-    +bool;
-    // 0
+bool;
+// false
 
-    bool + '';
-    // 'false'
-    ```
+// Insead of...
++bool;
+// 0
+// ...prefer explicit parsing to number
+Number( bool );
+// 0
 
+// Insead of...
+bool + '';
+// 'false'
+// ...prefer explicit parsing to string
+String( bool );
+```
 
-    ```javascript
-    // 3.B.2.2
+### 2.3.3. Coersion practices to avoid
 
-    var number = 1,
-        string = '1',
-        bool = true;
+Avoid using unpopular coersion operators due to lacking readability. Most of them have explicit versions, which are much more readable.
 
-    string === number;
-    // false
+#### 2.3.3.1. Bitwise NOT operator
 
-    string === number + '';
-    // true
+Instead of bitwise NOT operator `~` prefer explicit aproach by comparing returned value.
 
-    +string === number;
-    // true
+```javascript
+var array = [ 'a', 'b', 'c' ];
 
-    bool === number;
-    // false
+// Bad
+if ( ~array.indexOf( 'a' ) ) {
+	// ...
+}
 
-    +bool === number;
-    // true
+// Good
+if ( array.indexOf( 'a' ) >= 0 ) {
+  // ...
+}
+```
 
-    bool === string;
-    // false
+#### 2.3.3.2. Double bitwise NOT operator
+Instead of double bitwise NOT operator `~~` resulting in numerical substitution, use `Math.floor` or `parseInt` methods.
 
-    bool === !!string;
-    // true
-    ```
+```javascript
+var num = 2.5;
 
-    ```javascript
-    // 3.B.2.3
+// Bad
+~~num;
 
-    var array = [ 'a', 'b', 'c' ];
+// Good
+parseInt( num, 10 );
 
-    !!~array.indexOf( 'a' );
-    // true
+// Good
+Math.floor( num );
+```
 
-    !!~array.indexOf( 'b' );
-    // true
+## 2.4. Conditional Evaluation
 
-    !!~array.indexOf( 'c' );
-    // true
+### 2.4.1. Boolean array evaluation
 
-    !!~array.indexOf( 'd' );
-    // false
+```javascript
+// When only evaluating that an array has length,
+// instead of this:
+if ( array.length > 0 ) ...
 
-    // Note that the above should be considered "unnecessarily clever"
-    // Prefer the obvious approach of comparing the returned value of
-    // indexOf, like:
+// ...evaluate truthiness, like this:
+if ( array.length ) ...
 
-    if ( array.indexOf( 'a' ) >= 0 ) {
-      // ...
-    }
-    ```
+// When only evaluating that an array is empty,
+// instead of this:
+if ( array.length === 0 ) ...
 
-    ```javascript
-    // 3.B.2.4
+// ...evaluate truthiness, like this:
+if ( !array.length ) ...
+```
 
-    var num = 2.5;
+### 2.4.2. Boolean string evaluation
+```javascript
+// When only evaluating that a string is not empty,
+// instead of this:
+if ( string !== '' ) ...
 
-    parseInt( num, 10 );
+// ...evaluate truthiness, like this:
+if ( string ) ...
 
-    // Is the same as...
+// When only evaluating that a string _is_ empty,
+// instead of this:
+if ( string === '' ) ...
 
-    ~~num;
+// ...evaluate falsyness, like this:
+if ( !string ) ...
+```
 
-    num >> 0;
+### 2.4.3. Boolean evaluation
 
-    num >>> 0;
+```javascript
+// When only evaluating that a reference is true, instead of this:
+if ( foo === true ) ...
 
-    // All result in 2.
+// ...evaluate like you mean it, take advantage of built in capabilities:
+if ( foo ) ...
 
+// When evaluating that a reference is false, instead of this:
+if ( foo === false ) ...
 
-    // Keep in mind however, that negative numbers will be treated differently...
+// ...use negation to coerce a true evaluation
+if ( !foo ) ...
 
-    var neg = -2.5;
+// ...Be careful, this will also match: 0, '', null, undefined, NaN. If you MUST test for a boolean false, then use:
+if ( foo === false ) ...
+```
 
-    parseInt( neg, 10 );
+### 2.4.4. Boolean ref evaluation
 
-    // Is the same as...
+```javascript
+// When only evaluating a ref that might be null or undefined,
+// but NOT false, '' or 0, instead of this:
+if ( foo === null || foo === undefined ) ...
 
-    ~~neg;
+// ...take advantage of == type coercion, like this:
+if ( foo == null ) ...
 
-    neg >> 0;
+// Remember, using == will match a `null` to BOTH `null` and `undefined` but not `false`, '' or 0
+null == undefined
+```
 
-    // All result in -2.
-    // However...
+ALWAYS evaluate for the best, most accurate result - the above is a guideline, not a dogma.
 
-    neg >>> 0;
+### 2.4.5. Loose equality coersion 
+Use loose equality operator to simplify your code when you want to leverage type coercion. Remember that strict equality comparator `===` is checking if both the type and the value you are comparing are the same. In a constract, loose equality operator `==` will try to do type coersion which may be useful in some cases when comparing values where types are less revelant than values.
 
-    // Will result in 4294967294.
+```javascript
+false === 'false'
+// false
 
-    ```
+false == 'false'
+// true
 
+// 1 === '1'
+// false
 
-4. <a name="cond">Conditional Evaluation</a>
+// 1 == '1'
+// true
+```
 
-    ```javascript
+### 2.4.6. Booleans, Truthies & Falsies
+```javascript
+// Booleans:
+true, false
 
-    // 4.1.1
-    // When only evaluating that an array has length,
-    // instead of this:
-    if ( array.length > 0 ) ...
+// Truthy:
+"foo", 1
 
-    // ...evaluate truthiness, like this:
-    if ( array.length ) ...
+// Falsy:
+"", 0, null, undefined, NaN, void 0
+```
 
+## 2.5. Practical Style
 
-    // 4.1.2
-    // When only evaluating that an array is empty,
-    // instead of this:
-    if ( array.length === 0 ) ...
+### 2.5.1. Module pattern
 
-    // ...evaluate truthiness, like this:
-    if ( !array.length ) ...
+```javascript
+( function() {
+	var Module = ( function() {
+		var data = "secret";
 
+		return {
+			// This is some boolean property.
+			bool: true,
+			// Some string value.
+			string: 'a string',
+			// An array property.
+			array: [ 1, 2, 3, 4 ],
+			// An object property.
+			object: {
+				lang: 'en-Us'
+			},
 
-    // 4.1.3
-    // When only evaluating that a string is not empty,
-    // instead of this:
-    if ( string !== '' ) ...
+			getData: function() {
+				// Get the current value of `data`.
+				return data;
+			},
 
-    // ...evaluate truthiness, like this:
-    if ( string ) ...
+			setData: function( value ) {
+				// Set the value of `data` and return it.
+				return ( data = value );
+			}
+		};
+	} )();
 
+	// Other things might happen here.
 
-    // 4.1.4
-    // When only evaluating that a string _is_ empty,
-    // instead of this:
-    if ( string === '' ) ...
+	// Expose our module to the global object.
+	CKEDITOR.module = Module;
+} )();
+```
+### 2.5.2. Practical constructor
 
-    // ...evaluate falsyness, like this:
-    if ( !string ) ...
+```javascript
+( function() {
+	function Ctor( foo ) {
+		this.foo = foo;
 
+		return this;
+	}
 
-    // 4.1.5
-    // When only evaluating that a reference is true,
-    // instead of this:
-    if ( foo === true ) ...
+	CKEDITOR.tools.extend( Ctor.prototype, {
+		getFoo: function() {
+			return this.foo;
+		};
 
-    // ...evaluate like you mean it, take advantage of built in capabilities:
-    if ( foo ) ...
+		setFoo: function( val ) {
+			return ( this.foo = val );
+		};
+	} );
 
+	// Expose our constructor to the global object.
+	CKEDITOR.ctor = Ctor;
+} )();
+```
 
-    // 4.1.6
-    // When evaluating that a reference is false,
-    // instead of this:
-    if ( foo === false ) ...
+## 2.6. Naming
 
-    // ...use negation to coerce a true evaluation"
-    if ( !foo ) ...
+You are not a human code compiler/compressor, so don't try to be one.
 
-    // ...Be careful, this will also match: 0, '', null, undefined, NaN
-    // If you _MUST_ test for a boolean false, then use"
-    if ( foo === false ) ...
+The following code is an example of egregious naming:
 
+```javascript
+function q(s) {
+	return document.querySelectorAll(s);
+}
+var i,a=[],els=q("#foo");
+for(i=0;i<els.length;i++){a.push(els[i]);}
+```
 
-    // 4.1.7
-    // When only evaluating a ref that might be null or undefined,
-    // but NOT false, '' or 0, instead of this:
-    if ( foo === null || foo === undefined ) ...
+Here's the same piece of logic, but with kinder, more thoughtful naming (and a readable structure):
+```javascript
 
-    // ...take advantage of == type coercion, like this:
-    if ( foo == null ) ...
+function query( selector ) {
+  return document.querySelectorAll( selector );
+}
 
-    // Remember, using == will match a `null` to BOTH `null` and `undefined`
-    // but not `false`, '' or 0
-    null == undefined
+var id = 0,
+	elements = [],
+	matches = query( '#foo' ),
+	length = matches.length;
 
-    ```
+for ( ; id < length; id++ ) {
+	elements.push( matches[ id ] );
+}
+```
 
-    ALWAYS evaluate for the best, most accurate result - the above is a guideline, not a dogma.
+### 2.6.1. Notation
 
-    ```javascript
+#### 2.6.1.1. Variables, functions, objects
 
-    // 4.2.1
-    // Type coercion and evaluation notes
+Use `camelCase` notation for naming:
 
-    // Use === only if you have to - for example when you're dealing
-    // with user input or you need to distinguish between null and undefined.
-    // You can safely use == in most cases, especially
-    // when function's input is documented.
-    // It will be caller's fault if he passes wrong arguments.
+* variables
 
+```javascript
+var camelCaseVariableName = 'foo!';
+```
 
-    // 4.2.2
-    // Booleans, Truthies & Falsies
+* functions
+```javascript
+function camelCaseFunctionName() {}
+```
 
-    // Booleans:
-    true, false
+* methods
+```javascript
+object.prototype.camelCaseMethodName = function() {};
+```
 
-    // Truthy:
-    "foo", 1
+* objects
+```javascript
+var camelCaseObjectName = {
+	foo: 'foo',
+	bar: function() {}
+};
+```
 
-    // Falsy:
-    "", 0, null, undefined, NaN, void 0
+* instances
+```javascript
+var camelCaseInstance = new Object();
+```
 
-    ```
+* public members
+```javascript
+CKEDITOR.sth.camelCase = sth;
+```
 
+#### 2.6.1.2. Types
 
-5. <a name="practical">Practical Style</a>
+Use `PascalCase` notation for naming constructor function:
 
-    ```javascript
+```javascript
+function PascalCase () {}
 
-    // 5.1.1
-    // A Practical Module
+PascalCase.prototype = {
+	foo: function() {},
+	bar: function() {}
+};
+```
 
-    ( function() {
-        var Module = ( function() {
-            var data = "secret";
+#### 2.6.1.3. Constants
 
-            return {
-                // This is some boolean property.
-                bool: true,
-                // Some string value.
-                string: 'a string',
-                // An array property.
-                array: [ 1, 2, 3, 4 ],
-                // An object property.
-                object: {
-                    lang: 'en-Us'
-                },
+Use `UNDERSCORE_SNAKE_CASE` for naming constant variables:
 
-                getData: function() {
-                    // Get the current value of `data`.
-                    return data;
-                },
+```javascript
+// Constant variables.
+var CONSTANT_VARIABLE = 999;
 
-                setData: function( value ) {
-                    // Set the value of `data` and return it.
-                    return ( data = value );
-                }
-            };
-        } )();
+// Constant enum.
+CKEDITOR.sth.CONSTANT_ENUM = 1;
+```
 
-        // Other things might happen here.
+#### 2.6.1.4. Private members
 
-        // Expose our module to the global object.
-        CKEDITOR.module = Module;
-    } )();
+Only use underscore `_` name as an object member with private properties:
 
-    ```
+```javascript
+var object = {
+	// Public member.
+	foo: {},
+	// Also public member.
+	bar: {},
+	// Private member and everything contained inside this object is also private.
+	_: {}
+}
+```
 
-    ```javascript
+Avoid using underscore `_` with private variables, methods and functions. Note that all undocumented members are private by default, so there is no need beeing explicit here.
 
-    // 5.2.1
-    // A Practical Constructor
+```javascript
+// Bad
+var object = {
+	_foo: {}
+};
 
-    ( function() {
-        function Ctor( foo ) {
-            this.foo = foo;
+// Good
+var object = {
+	foo: {}
+};
 
-            return this;
-        }
+// Also good, but note that explicitivness is only needed for easier distinction between public and private members.
+var object = {
+	/*
+	 * @private
+	 */
+	 foo: {},
 
-        CKEDITOR.tools.extend( Ctor.prototype, {
-            getFoo: function() {
-                return this.foo;
-            };
+	/*
+	 * Some nice description here.
+	 * @property {Object}
+	 */
+	 bar: {}
+};
+```
 
-            setFoo: function( val ) {
-                return ( this.foo = val );
-            };
-        } );
+#### 2.6.1.5. Configuration members
 
-        // Expose our constructor to the global object.
-        CKEDITOR.ctor = Ctor;
-    } )();
+If configuration member is a part of core codebase, go with `camelCaseNaming` notation.
 
-    ```
+```javascript
+CKEDITOR.config.fooBarBaz = true;
+```
 
+If configuration member is a part of [plugin](https://ckeditor.com/docs/ckeditor4/latest/guide/dev_plugins.html) functionality, use `pluginName_optionName` pattern consisting of mixed `camelCase` plugin and option naming separated with underscore `_`.
 
-6. <a name="naming">Naming</a>
+```javascript
+CKEDITOR.config.myPlugin_myProperty = true;
+```
 
+## 2.7. Faces of `this`
 
-    A. You are not a human code compiler/compressor, so don't try to be one.
+### 2.7.1. Event listeners
 
-    The following code is an example of egregious naming:
+Keep `this` "local" to the class. This means &ndash; do not bind e.g. a function in `selection.js` file to editor instance and do not create a function which should be ran in editor context. This way you'll avoid confusion what `this` refers to.
 
-    ```javascript
+```javascript
+function Selection() {
+	var editor = this.editor;
 
-    // 6.A.1.1
-    // Example of code with poor names
+	// Bad:
+	editor.on( 'setData', someCallback, editor );
 
-    function q(s) {
-        return document.querySelectorAll(s);
-    }
-    var i,a=[],els=q("#foo");
-    for(i=0;i<els.length;i++){a.push(els[i]);}
-    ```
+	// Still bad:
+	editor.on( 'setData', CKEDITOR.tools.bind( someCallback, editor ) );
 
-    Here's the same piece of logic, but with kinder, more thoughtful naming (and a readable structure):
+	// Good:
+	editor.on( 'setData', someCallback, this );
 
-    ```javascript
+	// Good:
+	this.getEditor().on( 'setData', function( evt ) {
+		evt.editor.doSomething();
+	} );
 
-    // 6.A.2.1
-    // Example of code with improved names
+	// Good too:
+	var that = this;
+	editor.on( 'setData', function( evt ) {
+		editor.setCurrentSelection( that );
+	} );
+}
 
-    function query( selector ) {
-      return document.querySelectorAll( selector );
-    }
+function someCallback() {
+	// Should refers to Selection, not Editor.
+	this;
+}
+```
 
-    var id = 0,
-        elements = [],
-        matches = query( '#foo' ),
-        length = matches.length;
+### 2.7.2. Use `thisArg` argument
 
-    for ( ; id < length; id++ )
-        elements.push( matches[ id ] );
+Several prototype methods of ES 5.1 built-ins come with a special `thisArg` signature, which should be used whenever possible. CKEditor follows this practice too, so for example [`eventTarget.on`](http://docs.ckeditor.com/#!/api/CKEDITOR.event-method-on) also accepts context as an argument.
 
-    ```
+```javascript
+var obj = { f: 'foo', b: 'bar', q: 'qux' };
 
-    A few additional naming pointers:
+Object.keys( obj ).forEach( function( key ) {
 
-    ```javascript
+  // |this| now refers to `obj`
 
-    // 6.A.3.1
-    // Naming strings
+  console.log( this[ key ] );
 
-    `dog` is a string
+}, obj ); // <-- the last arg is `thisArg`
 
+// Prints...
 
-    // 6.A.3.2
-    // Naming arrays
+// 'foo'
+// 'bar'
+// 'qux'
+```
 
-    `dogs` is an array of `dog` strings
+`thisArg` can be used with `Array.prototype.every`, `Array.prototype.forEach`, `Array.prototype.some`, `Array.prototype.map`, `Array.prototype.filter`.
 
+### 2.7.3. Binding `this` to the function scope
 
-    // 6.A.3.3
-    // Naming functions, objects, instances, etc
+Beyond the generally well known use cases of `call` and `apply`, always prefer `.bind( this ) / CKEDITOR.tools.bind( fn, this )` for creating `BoundFunction` definitions for later invocation.
 
-    camelCase; function and var declarations
+```javascript
+function Device( opts ) {
+	stream.read( opts.path, CKEDITOR.tools.bind( function( value ) {
+		this.value = value;
+	}, this ) );
+}
+```
 
+Only resort to aliasing when no preferable option is available.
 
-    // 6.A.3.4
-    // Naming constructors, prototypes, etc.
+```javascript
+function Device( opts ) {
+	var self = this;
+	stream.read( opts.path, function( value ) {
+		self.value = value;
+	} );
+}
+```
 
-    // constructor function
-    PascalCase;
-    // but camel case when making public:
-    CKEDITOR.sth.camelCase;
+## 2.8. Misc
 
+This section will serve to illustrate ideas and concepts that should not be considered dogma, but instead exists to encourage questioning practices in an attempt to find better ways to do common JavaScript programming tasks.
 
-    // 6.A.3.6
-    // From the Google Closure Library Style Guide
+### 2.8.1. Early returns
 
-    functionNamesLikeThis;
-    variableNamesLikeThis;
-    ConstructorNamesLikeThis;
-    EnumNamesLikeThis;
-    methodNamesLikeThis;
-    SYMBOLIC_CONSTANTS_LIKE_THIS;
+Early returns promote code readability with negligible performance difference.
+```javascript
+// Bad:
+function returnLate( foo ) {
+	var ret;
 
-    ```
+	if ( foo ) {
+		ret = 'foo';
+	} else {
+		ret = 'quux';
+	}
+	return ret;
+}
 
-    B. Faces of `this`
+// Good:
+function returnEarly( foo ) {
+	if ( foo ) {
+		return 'foo';
+	}
+	return 'quux';
+}
 
-    Keep `this` "local" to the class. This means &ndash; do not bind e.g. a function in `selection.js` file to editor instance and do not create a function which should be ran in editor context. This way you'll avoid confusion what `this` refers to.
+// Bad:
+function doSthComplex( foo, bar ) {
+	if ( foo ) {
+		// do something
 
-    ```javascript
+		if ( bar ) {
+			// do something
+		} else {
+			// do something else
+		}
+	}
+}
 
-    // 6.B.1
-    function Selection() {
-        var editor = this.editor;
+// Good:
+function doSthComplex( foo, bar ) {
+	if ( !foo )
+		return;
 
-        // Bad:
-        editor.on( 'setData', someCallback, editor );
+	// do something
 
-        // Still bad:
-        editor.on( 'setData', CKEDITOR.tools.bind( someCallback, editor ) );
+	if ( !bar ) {
+		// do something else
+		return;
+	}
 
-        // Good:
-        editor.on( 'setData', someCallback, this );
+	// do something
+}
+```
 
-        // Good:
-        this.getEditor().on( 'setData', function( evt ) {
-            evt.editor.doSomething();
-        } );
+### 2.8.2. Objects minify poorly, closures very well
 
-        // Good too:
-        var that = this;
-        editor.on( 'setData', function( evt ) {
-            editor.setCurrentSelection( that );
-        } );
-    }
+Avoid excessing usage of objects, when functional programming may be used as well. Properties and method names unlike private variables and function names cannot be shortened by minifier.
+You can play with [online Google Closure Compiler](http://closure-compiler.appspot.com/home) to test different approaches. Make sure to check the gzipped size which matters the most.
 
-    function someCallback() {
-        // Should refers to Selection, not Editor.
-        this;
-    }
 
-    ```
+## 2.9. Native & Host Objects
 
-    C. Use `thisArg`
+The basic principle here is:
 
-    Several prototype methods of ES 5.1 built-ins come with a special `thisArg` signature, which should be used whenever possible. CKEditor follows this practice too, so for example [`eventTarget.on`](http://docs.ckeditor.com/#!/api/CKEDITOR.event-method-on) also accepts context as an argument.
+	Don't do stupid shit and everything will be ok.
 
-    ```javascript
+To reinforce this concept, please watch the following presentation:
+	
+[“Everything is Permitted: Extending Built-ins” by Andrew Dupont (JSConf2011, Portland, Oregon)](https://www.youtube.com/watch?v=xL3xCO7CLNM)
 
-    // 6.C.1
+**But** CKEditor is a widget - an application inside someone's system &ndash; so... do not touch anything except
+`CKEDITOR.*` namespace.
 
-    var obj = { f: 'foo', b: 'bar', q: 'qux' };
 
-    Object.keys( obj ).forEach( function( key ) {
+## 2.10. Comments
+- Single line above the code that is subject (except for long expressions like conditions).
+- Comment is a sentence - start it with capital leter, end with period.
+- Use multiline comments only for API documentation.
+- Check the [JSDuck documentation guide](http://dev.ckeditor.com/wiki/CodeDocumentation).
+- You can use JSDuck documentation style for private functions, but then use single line comments.
+- Justify end line comments with tabs:
 
-      // |this| now refers to `obj`
+```javascript
+if ( some != really.complex &&      // Comment line 1.
+	condition || with &&            // Comment line 2.
+	( multiple == !lines ) )        // Comment line 3.
 
-      console.log( this[ key ] );
+// Of course it's better to avoid this spaghetti at all.
+```
 
-    }, obj ); // <-- the last arg is `thisArg`
+# 3. Tests
 
-    // Prints...
+## 3.1. Manual tests
 
-    // 'foo'
-    // 'bar'
-    // 'qux'
+Manual tests reproduction steps should be structured in one, ubiquitous way, to unify test files, so they are easy to read and modify. Manual test file should consist only of a single test suite. Also, avoid putting many test cases in the same file, extract common logic instead using helper methods or template files.
 
-    ```
+Example of the correct manual test:
 
-    `thisArg` can be used with `Array.prototype.every`, `Array.prototype.forEach`, `Array.prototype.some`, `Array.prototype.map`, `Array.prototype.filter`.
+```md
+@bender-tags: 4.14.0, feature, 999
+@bender-ui: collapsed
+@bender-ckeditor-plugins: wysiwygarea, toolbar, basicstyles
+@bender-include: helpers/utils.js
 
-7. <a name="misc">Misc</a>
+1. Focus the editor.
+1. Type `Hello, World!`.
+1. Press `enter`.
 
-    A. Early returns promote code readability with negligible performance difference
+**Expected**
 
-    ```javascript
+* Editor is responsive.
+* Typed text has been registered by the editor.
 
-    // 7.A.1.1
-    // Bad:
-    function returnLate( foo ) {
-        var ret;
+**Unexpected**
 
-        if ( foo ) {
-            ret = 'foo';
-        } else {
-            ret = 'quux';
-        }
-        return ret;
-    }
+* Editor loses focus.
+* Typed text is in the reverse order.
+```
 
-    // Good:
-    function returnEarly( foo ) {
-        if ( foo ) {
-            return 'foo';
-        }
-        return 'quux';
-    }
+You can also inline `Expected/Unexpected` if they are consist of the single sentence line:
 
-    // Bad:
-    function doSthComplex( foo, bar ) {
-        if ( foo ) {
-            // do something
+```md
+@bender-tags: 4.14.0, feature, 999
+@bender-ui: collapsed
+@bender-ckeditor-plugins: wysiwygarea, toolbar, basicstyles
+@bender-include: helpers/utils.js
 
-            if ( bar ) {
-                // do something
-            } else {
-                // do something else
-            }
-        }
-    }
+1. Focus the editor.
+1. Type `Hello, World!`.
+1. Press `enter`.
 
-    // Good:
-    function doSthComplex( foo, bar ) {
-        if ( !foo )
-            return;
+**Expected** Editor is responsive.
 
-        // do something
+**Unexpected** Editor is not responsive.
+```
 
-        if ( !bar ) {
-            // do something else
-            return;
-        }
+And even skip `Unexpected` if `Expected` result is obvious enough to guess `Unexpected`:
 
-        // do something
-    }
+```md
+@bender-tags: 4.14.0, feature, 999
+@bender-ui: collapsed
+@bender-ckeditor-plugins: wysiwygarea, toolbar, basicstyles
+@bender-include: helpers/utils.js
 
-    ```
+1. Focus the editor.
+1. Type `Hello, World!`.
+1. Press `enter`.
 
-    B. (CKEditor only) Objects minify poorly, closures very well
+**Expected** Editor is responsive.
+```
 
-    Avoid excessing usage of objects, when functional programming may be used as well. Properties
-    and method names unlike private variables and function names cannot be shortened by minifier.
+If you need to repeat some test steps for the same test case, make it obvious enough by numbering test steps instead of using `1` everywhere. But note, that such practice should be also used when test is very simple and additional test case won't add too much complexity to the test file:
 
-    You can play with [online Google Closure Compiler](http://closure-compiler.appspot.com/home) to
-    test different approaches. Make sure to check the gzipped size which matters the most.
+```md
+@bender-tags: 4.14.0, feature, 999
+@bender-ui: collapsed
+@bender-ckeditor-plugins: wysiwygarea, toolbar, basicstyles
+@bender-include: helpers/utils.js
 
+1. Focus the editor.
+2. Type `Hello, World!`.
+3. Press `enter`.
 
-8. <a name="native">Native & Host Objects</a>
+**Expected** Editor is responsive.
 
-    The basic principle here is:
+4. Repeat 1-2.
+5. Press `tab`.
 
-    ### Don't do stupid shit and everything will be ok.
+**Expected** Editor is responsive.
+```
 
-    To reinforce this concept, please watch the following presentation:
+But **NEVER** put more than one test suite into the same manual test file:
 
-    #### “Everything is Permitted: Extending Built-ins” by Andrew Dupont (JSConf2011, Portland, Oregon)
+```md
+@bender-tags: 4.14.0, feature, 999
+@bender-ui: collapsed
+@bender-ckeditor-plugins: wysiwygarea, toolbar, basicstyles
+@bender-include: helpers/utils.js
 
-    <iframe src="http://blip.tv/play/g_Mngr6LegI.html" width="480" height="346" frameborder="0" allowfullscreen></iframe><embed type="application/x-shockwave-flash" src="http://a.blip.tv/api.swf#g_Mngr6LegI" style="display:none"></embed>
+## Classic editor
 
-    http://blip.tv/jsconf/jsconf2011-andrew-dupont-everything-is-permitted-extending-built-ins-5211542
+1. Focus the editor.
+2. Type `Hello, World!`.
+3. Press `enter`.
 
-    **But** CKEditor is a widget - an application inside someone's system &ndash; so... do not touch anything except
-    `CKEDITOR.*` namespace.
+**Expected** Editor is responsive.
 
+## Inline editor
 
-9. <a name="comments">Comments</a>
-  - Single line above the code that is subject (except for long expressions like conditions).
-  - Comment is a sentence - start it with capital leter, end with period.
-  - Use multiline comments only for API documentation.
-  - Check the [JSDuck documentation guide](http://dev.ckeditor.com/wiki/CodeDocumentation).
-  - You can use JSDuck documentation style for private functions, but then use single line comments.
-  - Justify end line comments with tabs:
+1. Focus the editor.
 
-            if ( some != really.complex &&      // Comment line 1.
-                condition || with &&            // Comment line 2.
-                ( multiple == !lines ) )        // Comment line 3.
+**Expected** Toolbar shows up.
+```
 
-            // Of course it's better to avoid this spaghetti at all.
-
+Extract common logic instead using helper functions for HTML files or use `__template__.html` feature which will share the same HTML file among manual tests in the same folder. It's better to accept some small duplication than overrun manual testing due to high test complexity.
 
 ----------
 
