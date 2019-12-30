@@ -338,7 +338,7 @@ CKEDITOR.module2 = {
 }
 ```
 
-Note that the same practice applies to objects, however, keep in mind that [public API has higher priority than private helpers](#2231-public-api).
+Note that the same practice applies to objects:
 
 ```javascript
 CKEDITOR.module1 = {
