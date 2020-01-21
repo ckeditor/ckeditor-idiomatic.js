@@ -157,7 +157,7 @@ var foo = 'foo',
 
 #### 2.2.2.3. One variable per scope
 
-Using only one variable per scope (function) promotes readability and keeps your declaration list free of clutter (also saves a few keystrokes). However, don't overuse it. If a scope have multiple lines of code, it may be more readable to declare variable later when it's defined or used than expect developer to scroll up to declaration list instead.
+Using only one variable per scope (function) promotes readability and keeps your declaration list free of clutter (also saves a few keystrokes). However, if a scope have [early returns](281-early-returns) statements, it will be more readable and performance wise declaring variable later, when definition is needed.
 
 ```javascript
 // Bad.
@@ -182,10 +182,27 @@ function foo() {
 	var bar = '',
 		foo = '';
 
-	// 10 statements
+	// some statements
+}
 
-	var bom = '';   // Assuming that bom isn't needed before, there's no sense
-					// in grouping it with the first group.
+// Bad
+function bar( x ) {
+	var foo = doSomethingSlow();
+
+	if ( x < 2 ) {
+		return;
+	}
+
+	// some statements
+}
+
+// Good
+function bar( x ) {
+	if ( x < 2 ) {
+		return;
+	}
+
+	var foo = doSomethingSlow();
 
 	// some statements
 }
