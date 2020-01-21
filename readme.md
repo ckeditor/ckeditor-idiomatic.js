@@ -999,12 +999,6 @@ function doSthComplex( foo, bar ) {
 }
 ```
 
-#### 2.8.2. Objects minify poorly, closures very well
-
-Avoid excessing usage of objects, when functional programming may be used as well. Properties and method names unlike private variables and function names cannot be shortened by minifier.
-You can play with [online Google Closure Compiler](http://closure-compiler.appspot.com/home) to test different approaches. Make sure to check the gzipped size which matters the most.
-
-
 ### 2.9. Native & Host Objects
 
 The basic principle here is:
