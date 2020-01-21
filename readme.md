@@ -1,6 +1,6 @@
 # 1. Introduction
 
-**This document is based on [Idiomatic.JS](https://github.com/rwldrn/idiomatic.js).** However, it contains many clarifications and rules specific for projects maintained by [CKSource](http://cksource.com/) like [CKEditor](https://github.com/ckeditor/ckeditor-dev).
+**This document is based on [Idiomatic.JS](https://github.com/rwldrn/idiomatic.js).** However, it contains many clarifications and rules specific for projects maintained by [CKSource](http://cksource.com/) like [CKEditor 4](https://github.com/ckeditor/ckeditor4).
 
 ## 1.1. Mottos
 
