@@ -1003,14 +1003,9 @@ function doSthComplex( foo, bar ) {
 
 The basic principle here is:
 
-	Don't do stupid shit and everything will be ok.
+	Don't extend native objects and everything will be ok.
 
-To reinforce this concept, please watch the following presentation:
-	
-[“Everything is Permitted: Extending Built-ins” by Andrew Dupont (JSConf2011, Portland, Oregon)](https://www.youtube.com/watch?v=xL3xCO7CLNM)
-
-**But** CKEditor is a widget - an application inside someone's system &ndash; so... do not touch anything except
-`CKEDITOR.*` namespace.
+CKEditor is a widget - an application inside someone's system &ndash; so... do not touch anything except `CKEDITOR.*` namespace.
 
 
 ### 2.10. Comments
