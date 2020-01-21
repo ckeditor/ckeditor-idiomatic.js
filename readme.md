@@ -436,7 +436,7 @@ Node:
 // In CKEditor:
 elem.type == CKEDITOR.NODE_ELEMENT
 // In other cases:
-elem.nodeType == 1
+elem.nodeType == Node.ELEMENT_NODE
 ```
 
 null:
