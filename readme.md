@@ -1,3 +1,5 @@
+# Code style guide for [CKEditor 4](https://ckeditor.com/ckeditor/ckeditor4)
+
 **Table of contents**
 
 * [Code style guide](#2-code-style-guide)
@@ -14,25 +16,25 @@
 * [Tests](#3-tests)
 	* [Manual tests](#31-manual-tests)
 
-# 1. Introduction
+## 1. Introduction
 
 **This document is based on [Idiomatic.JS](https://github.com/rwldrn/idiomatic.js).** However, it contains many clarifications and rules specific for projects maintained by [CKSource](http://cksource.com/) like [CKEditor 4](https://github.com/ckeditor/ckeditor4).
 
-## 1.1. Mottos
+### 1.1. Mottos
 
-> ### All code in any code-base should look like a single person typed it, no matter how many people contributed.
+> #### All code in any code-base should look like a single person typed it, no matter how many people contributed.
 
-> ### "Arguments over style are pointless. There should be a style guide, and you should follow it"
+> #### "Arguments over style are pointless. There should be a style guide, and you should follow it"
 >_Rebecca_ _Murphey_
 
 &nbsp;
 
-> ### "Part of being a good steward to a successful project is realizing that writing code for yourself is a Bad Idea™. If thousands of people are using your code, then write your code for maximum clarity, not your personal preference of how to get clever within the spec."
+> #### "Part of being a good steward to a successful project is realizing that writing code for yourself is a Bad Idea™. If thousands of people are using your code, then write your code for maximum clarity, not your personal preference of how to get clever within the spec."
 >_Idan_ _Gazit_
 
-# 2. Code style guide
+## 2. Code style guide
 
-## 2.1 Whitespace
+### 2.1 Whitespace
 - Always use tabs. Never use spaces for indentation (for both - code and comments).
 - Do not leave trailing spaces (**note:** empty lines should not contain any spaces).
 - Always use LF line endings. Never use CRLF.
@@ -56,11 +58,11 @@ indent_style = tab
 trim_trailing_whitespace = true
 ```
 
-## 2.2. Beautiful syntax
+### 2.2. Beautiful syntax
 
-### 2.2.1. Parens, Braces, Linebreaks
+#### 2.2.1. Parens, Braces, Linebreaks
 
-#### 2.2.1.1. Use whitespace to promote readability
+##### 2.2.1.1. Use whitespace to promote readability
 
 ```javascript
 if ( condition ) {
@@ -97,7 +99,7 @@ try {
 
 ```
 
-#### 2.2.1.2. Always use brackets even for a single line statements
+##### 2.2.1.2. Always use brackets even for a single line statements
 
 ```javascript
 // Bad
@@ -120,9 +122,9 @@ if ( false ) {
 }
 ```
 
-### 2.2.2. Assignments, Declarations, Functions
+#### 2.2.2. Assignments, Declarations, Functions
 
-#### 2.2.2.1. Declaring variables
+##### 2.2.2.1. Declaring variables
 
 ```javascript
 var foo = 'bar',
@@ -134,7 +136,7 @@ var array = [],
 	object = {};
 ```
 
-#### 2.2.2.2. Single line per declaration
+##### 2.2.2.2. Single line per declaration
 
 Declaring one variable per line improves debugging experience. Multiple variables declared in the same line won't allow you to place breakpoint at the definition computation. The same goes to object literals.
 
@@ -155,7 +157,7 @@ var foo = 'foo',
 
 ```
 
-#### 2.2.2.3. One variable per scope
+##### 2.2.2.3. One variable per scope
 
 Using only one variable per scope (function) promotes readability and keeps your declaration list free of clutter (also saves a few keystrokes). However, if a scope have [early returns](281-early-returns) statements, it will be more readable and performance wise declaring variable later, when definition is needed.
 
@@ -208,7 +210,7 @@ function bar( x ) {
 }
 ```
 
-#### 2.2.2.4. Function declaration
+##### 2.2.2.4. Function declaration
 
 Prefer function declaration instead of [function expression](#2225-function-expression) to avoid issues with executing function before it has been defined.
 
@@ -229,7 +231,7 @@ function square( number ) {
 square( 10 );
 ```
 
-#### 2.2.2.5. Function expression
+##### 2.2.2.5. Function expression
 
 Prefer [function declaration](#2224-function-declaration) when possible.
 
@@ -239,7 +241,7 @@ Prefer [function declaration](#2224-function-declaration) when possible.
     };
 ```
 
-#### 2.2.2.6. Continuation-Passing style
+##### 2.2.2.6. Continuation-Passing style
 
 If your function should be executed asynchorously or requires additional callback (e.g. filter function) as an function argument, pass it as the last argument in function signature.
 
@@ -255,7 +257,7 @@ square( 10, function( square ) {
 } );
 ```
 
-#### 2.2.2.7 Constructor declaration
+##### 2.2.2.7 Constructor declaration
 ```javascript
 function FooBar( options ) {
 	this.options = options;
@@ -269,9 +271,9 @@ var fooBar = new FooBar( {
 fooBar.options; // -> { a: 'alpha' }
 ```
 
-### 2.2.3. Code structure
+#### 2.2.3. Code structure
 
-#### 2.2.3.1. Public API
+##### 2.2.3.1. Public API
 
 Exposing public API should have much higher priority in file structure than private members. It improves API discoverability and hides private members.
 
@@ -314,7 +316,7 @@ var module = ( function() {
 } )();
 ```
 
-#### 2.2.3.2. Helper functions
+##### 2.2.3.2. Helper functions
 
 When extracting helper function, move it right after the first usage inside the nearest scope which won't affect code performance and memory usage. In most cases, you want to keep helper functions on the same scope level as a public one unless they are used somewhere else in the same file.
 
@@ -373,7 +375,7 @@ CKEDITOR.module1 = {
 };
 ```
 
-#### 2.2.3.3. Configuration members
+##### 2.2.3.3. Configuration members
 
 Configuration members exposed by `CKEDITOR.config` object should be moved at the end of the code file. It's adapted practice in CKEditor code base which improves configuration options discoverability.
 
@@ -388,13 +390,13 @@ CKEDITOR.config.foo = 'foo';
 CKEDITOR.config.bar = 'bar';
 ```
 
-### 2.2.4. Quotes
+#### 2.2.4. Quotes
 
 Always use single quotes in JavaScript, but double quotes in HTML.
 
-## 2.3. Type checking
+### 2.3. Type checking
 
-### 2.3.1. Actual Types
+#### 2.3.1. Actual Types
 
 String:
 
@@ -451,7 +453,7 @@ undefined:
 variable === undefined
 ```
 
-#### 2.3.2. Coerced Types
+##### 2.3.2. Coerced Types
 
 Use coersion with caution. In most cases prefer explicit type casting than using implicit operator coersion. Note that some practices are more common than the others, so use common sense to choose correct casting method.
 
@@ -500,11 +502,11 @@ bool + '';
 String( bool );
 ```
 
-### 2.3.3. Coersion practices to avoid
+#### 2.3.3. Coersion practices to avoid
 
 Avoid using unpopular coersion operators due to lacking readability. Most of them have explicit versions, which are much more readable.
 
-#### 2.3.3.1. Bitwise NOT operator
+##### 2.3.3.1. Bitwise NOT operator
 
 Instead of bitwise NOT operator `~` prefer explicit aproach by comparing returned value.
 
@@ -522,7 +524,7 @@ if ( array.indexOf( 'a' ) >= 0 ) {
 }
 ```
 
-#### 2.3.3.2. Double bitwise NOT operator
+##### 2.3.3.2. Double bitwise NOT operator
 Instead of double bitwise NOT operator `~~` resulting in numerical substitution, use `Math.floor` or `parseInt` methods.
 
 ```javascript
@@ -538,9 +540,9 @@ parseInt( num, 10 );
 Math.floor( num );
 ```
 
-## 2.4. Conditional Evaluation
+### 2.4. Conditional Evaluation
 
-### 2.4.1. Boolean array evaluation
+#### 2.4.1. Boolean array evaluation
 
 ```javascript
 // When only evaluating that an array has length,
@@ -558,7 +560,7 @@ if ( array.length === 0 ) ...
 if ( !array.length ) ...
 ```
 
-### 2.4.2. Boolean string evaluation
+#### 2.4.2. Boolean string evaluation
 ```javascript
 // When only evaluating that a string is not empty,
 // instead of this:
@@ -575,7 +577,7 @@ if ( string === '' ) ...
 if ( !string ) ...
 ```
 
-### 2.4.3. Boolean evaluation
+#### 2.4.3. Boolean evaluation
 
 ```javascript
 // When only evaluating that a reference is true, instead of this:
@@ -594,7 +596,7 @@ if ( !foo ) ...
 if ( foo === false ) ...
 ```
 
-### 2.4.4. Boolean ref evaluation
+#### 2.4.4. Boolean ref evaluation
 
 ```javascript
 // When only evaluating a ref that might be null or undefined,
@@ -610,7 +612,7 @@ null == undefined
 
 ALWAYS evaluate for the best, most accurate result - the above is a guideline, not a dogma.
 
-### 2.4.5. Loose equality coersion 
+#### 2.4.5. Loose equality coersion 
 Use loose equality operator to simplify your code when you want to leverage type coercion. Remember that strict equality comparator `===` is checking if both the type and the value you are comparing are the same. In a constract, loose equality operator `==` will try to do type coersion which may be useful in some cases when comparing values where types are less revelant than values.
 
 ```javascript
@@ -627,7 +629,7 @@ false == 'false'
 // true
 ```
 
-### 2.4.6. Booleans, Truthies & Falsies
+#### 2.4.6. Booleans, Truthies & Falsies
 ```javascript
 // Booleans:
 true, false
@@ -639,9 +641,9 @@ true, false
 "", 0, null, undefined, NaN, void 0
 ```
 
-## 2.5. Practical Style
+### 2.5. Practical Style
 
-### 2.5.1. Module pattern
+#### 2.5.1. Module pattern
 
 ```javascript
 ( function() {
@@ -678,7 +680,7 @@ true, false
 	CKEDITOR.module = Module;
 } )();
 ```
-### 2.5.2. Practical constructor
+#### 2.5.2. Practical constructor
 
 ```javascript
 ( function() {
@@ -703,7 +705,7 @@ true, false
 } )();
 ```
 
-## 2.6. Naming
+### 2.6. Naming
 
 You are not a human code compiler/compressor, so don't try to be one.
 
@@ -733,9 +735,9 @@ for ( var i = 0; i < length; i++ ) {
 }
 ```
 
-### 2.6.1. Notation
+#### 2.6.1. Notation
 
-#### 2.6.1.1. Variables, functions, objects
+##### 2.6.1.1. Variables, functions, objects
 
 Use `camelCase` notation for naming:
 
@@ -773,7 +775,7 @@ var camelCaseInstance = new Object();
 CKEDITOR.sth.camelCase = sth;
 ```
 
-#### 2.6.1.2. Types
+##### 2.6.1.2. Types
 
 Use `PascalCase` notation for naming constructor function:
 
@@ -786,7 +788,7 @@ PascalCase.prototype = {
 };
 ```
 
-#### 2.6.1.3. Constants
+##### 2.6.1.3. Constants
 
 Use `UNDERSCORE_SNAKE_CASE` for naming constant variables:
 
@@ -798,7 +800,7 @@ var CONSTANT_VARIABLE = 999;
 CKEDITOR.sth.CONSTANT_ENUM = 1;
 ```
 
-#### 2.6.1.4. Private members
+##### 2.6.1.4. Private members
 
 Only use underscore `_` name as an object member with private properties:
 
@@ -841,7 +843,7 @@ var object = {
 };
 ```
 
-#### 2.6.1.5. Configuration members
+##### 2.6.1.5. Configuration members
 
 If configuration member is a part of core codebase, go with `camelCaseNaming` notation.
 
@@ -855,9 +857,9 @@ If configuration member is a part of [plugin](https://ckeditor.com/docs/ckeditor
 CKEDITOR.config.myPlugin_myProperty = true;
 ```
 
-## 2.7. Faces of `this`
+### 2.7. Faces of `this`
 
-### 2.7.1. Event listeners
+#### 2.7.1. Event listeners
 
 Keep `this` "local" to the class. This means &ndash; do not bind e.g. a function in `selection.js` file to editor instance and do not create a function which should be ran in editor context. This way you'll avoid confusion what `this` refers to.
 
@@ -892,7 +894,7 @@ function someCallback() {
 }
 ```
 
-### 2.7.2. Use `thisArg` argument
+#### 2.7.2. Use `thisArg` argument
 
 Several prototype methods of ES 5.1 built-ins come with a special `thisArg` signature, which should be used whenever possible. CKEditor follows this practice too, so for example [`eventTarget.on`](http://docs.ckeditor.com/#!/api/CKEDITOR.event-method-on) also accepts context as an argument.
 
@@ -916,7 +918,7 @@ Object.keys( obj ).forEach( function( key ) {
 
 `thisArg` can be used with `Array.prototype.every`, `Array.prototype.forEach`, `Array.prototype.some`, `Array.prototype.map`, `Array.prototype.filter`.
 
-### 2.7.3. Binding `this` to the function scope
+#### 2.7.3. Binding `this` to the function scope
 
 Beyond the generally well known use cases of `call` and `apply`, always prefer `.bind( this ) / CKEDITOR.tools.bind( fn, this )` for creating `BoundFunction` definitions for later invocation.
 
@@ -939,11 +941,11 @@ function Device( opts ) {
 }
 ```
 
-## 2.8. Misc
+### 2.8. Misc
 
 This section will serve to illustrate ideas and concepts that should not be considered dogma, but instead exists to encourage questioning practices in an attempt to find better ways to do common JavaScript programming tasks.
 
-### 2.8.1. Early returns
+#### 2.8.1. Early returns
 
 Early returns promote code readability with negligible performance difference.
 ```javascript
@@ -997,13 +999,13 @@ function doSthComplex( foo, bar ) {
 }
 ```
 
-### 2.8.2. Objects minify poorly, closures very well
+#### 2.8.2. Objects minify poorly, closures very well
 
 Avoid excessing usage of objects, when functional programming may be used as well. Properties and method names unlike private variables and function names cannot be shortened by minifier.
 You can play with [online Google Closure Compiler](http://closure-compiler.appspot.com/home) to test different approaches. Make sure to check the gzipped size which matters the most.
 
 
-## 2.9. Native & Host Objects
+### 2.9. Native & Host Objects
 
 The basic principle here is:
 
@@ -1017,7 +1019,7 @@ To reinforce this concept, please watch the following presentation:
 `CKEDITOR.*` namespace.
 
 
-## 2.10. Comments
+### 2.10. Comments
 - Single line above the code that is subject (except for long expressions like conditions).
 - Comment is a sentence - start it with capital leter, end with period.
 - Use multiline comments only for API documentation.
@@ -1033,9 +1035,9 @@ if ( some != really.complex &&      // Comment line 1.
 // Of course it's better to avoid this spaghetti at all.
 ```
 
-# 3. Tests
+## 3. Tests
 
-## 3.1. Manual tests
+### 3.1. Manual tests
 
 Manual tests reproduction steps should be structured in one, ubiquitous way, to unify test files, so they are easy to read and modify. Manual test file should consist only of a single test suite. Also, avoid putting many test cases in the same file, extract common logic instead using helper methods or template files.
 
@@ -1122,7 +1124,7 @@ But **NEVER** put more than one test suite into the same manual test file:
 @bender-ckeditor-plugins: wysiwygarea, toolbar, basicstyles
 @bender-include: helpers/utils.js
 
-## Classic editor
+### Classic editor
 
 1. Focus the editor.
 2. Type `Hello, World!`.
@@ -1130,7 +1132,7 @@ But **NEVER** put more than one test suite into the same manual test file:
 
 **Expected** Editor is responsive.
 
-## Inline editor
+### Inline editor
 
 1. Focus the editor.
 
