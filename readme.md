@@ -324,9 +324,9 @@ CKEDITOR.module1 = {
 		// Good
 		foo();
 
-		// Bad thus the function object will be created every time when doSomething function executed.
 		bar();
 
+		// Bad thus the function object will be created every time when doSomething function executed.
 		function bar() {
 			// ...
 		}
