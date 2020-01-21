@@ -335,6 +335,14 @@ CKEDITOR.module1 = {
 	}
 };
 
+CKEDITOR.module2 = {
+	doSomething: function() {
+		// Note that despite this function is used in another module later,
+		// it has been correctly declared as close as possible to the first usage.
+		foo();
+	}
+}
+
 function foo() {
 	baz();
 	quix();
@@ -346,14 +354,6 @@ function baz() {
 
 function quix() {
 	// ...
-}
-
-CKEDITOR.module2 = {
-	doSomething: function() {
-		// Note that despite this function is used in another module later,
-		// it has been correctly declared as close as possible to the first usage.
-		foo();
-	}
 }
 ```
 
@@ -436,9 +436,9 @@ Node:
 
 ```javascript
 // In CKEditor:
-elem.type == CKEDITOR.NODE_ELEMENT
+elem.type === CKEDITOR.NODE_ELEMENT
 // In other cases:
-elem.nodeType == Node.ELEMENT_NODE
+elem.nodeType === Node.ELEMENT_NODE
 ```
 
 null:
