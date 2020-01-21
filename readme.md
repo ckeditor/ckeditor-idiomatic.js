@@ -724,13 +724,12 @@ function query( selector ) {
   return document.querySelectorAll( selector );
 }
 
-var id = 0,
-	elements = [],
+var elements = [],
 	matches = query( '#foo' ),
 	length = matches.length;
 
-for ( ; id < length; id++ ) {
-	elements.push( matches[ id ] );
+for ( var i = 0; i < length; i++ ) {
+	elements.push( matches[ i ] );
 }
 ```
 
