@@ -42,18 +42,18 @@
   - Eliminating blank line whitespace
   - Commits and diffs that are easier to read
 
-Related settings for Sublime users:
+Related settings for [Editor Config](https://editorconfig.org/):
 
-	{
-		// Defaults:
-		"tab_size": 4,
-		"translate_tabs_to_spaces": false,
+```
+root = true
 
-		// Additional settings:
-		"default_line_ending": "unix",
-		"trim_trailing_white_space_on_save": true
-	}
+[*]
+end_of_line = lf
+insert_final_newline = true
 
+indent_style = tab
+trim_trailing_whitespace = true
+```
 
 ## 2.2. Beautiful syntax
 
