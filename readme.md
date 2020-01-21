@@ -34,7 +34,6 @@
 
 ## 2.1 Whitespace
 - Always use tabs. Never use spaces for indentation (for both - code and comments).
-- Tab is 4 spaces.
 - Do not leave trailing spaces (**note:** empty lines should not contain any spaces).
 - Always use LF line endings. Never use CRLF.
 - If your editor supports it, always work with the "show invisibles" setting turned on. The benefits of this practice are:
