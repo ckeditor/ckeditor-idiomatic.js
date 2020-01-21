@@ -36,6 +36,7 @@
 - Always use tabs. Never use spaces for indentation (for both - code and comments).
 - Do not leave trailing spaces (**note:** empty lines should not contain any spaces).
 - Always use LF line endings. Never use CRLF.
+- Each file end up with an empty line character EOL.
 - If your editor supports it, always work with the "show invisibles" setting turned on. The benefits of this practice are:
   - Enforced consistency
   - Eliminating end of line whitespace
