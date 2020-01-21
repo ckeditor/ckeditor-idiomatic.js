@@ -983,8 +983,9 @@ function doSthComplex( foo, bar ) {
 
 // Good:
 function doSthComplex( foo, bar ) {
-	if ( !foo )
+	if ( !foo ) {
 		return;
+	}
 
 	// do something
 
