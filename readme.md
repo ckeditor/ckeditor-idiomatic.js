@@ -1,3 +1,19 @@
+**Table of contents**
+
+* [Code style guide](#2-code-style-guide)
+	* [Whitespace](#21-whitespace)
+	* [Beautiful Syntax](#22-beautiful-syntax)
+	* [Type Checking (Courtesy jQuery Core Style Guidelines)](#23-type-checking)
+	* [Conditional Evaluation](#24-conditional-evaluation)
+	* [Practical Style](#25-practical-style)
+	* [Naming](#26-naming)
+	* [Faces of `this`](#27-faces-of-this)
+	* [Misc](#28-misc)
+	* [Native & Host Objects](#29-native--host-objects)
+	* [Comments](#210-comments)
+* [Tests](#3-tests)
+	* [Manual tests](#31-manual-tests)
+
 # 1. Introduction
 
 **This document is based on [Idiomatic.JS](https://github.com/rwldrn/idiomatic.js).** However, it contains many clarifications and rules specific for projects maintained by [CKSource](http://cksource.com/) like [CKEditor 4](https://github.com/ckeditor/ckeditor4).
@@ -13,22 +29,6 @@
 
 > ### "Part of being a good steward to a successful project is realizing that writing code for yourself is a Bad Idea™. If thousands of people are using your code, then write your code for maximum clarity, not your personal preference of how to get clever within the spec."
 >_Idan_ _Gazit_
-
-## 1.2. Table of contents
-
-* [Code style guide](#2-code-style-guide)
-	* [Whitespace](#21-whitespace)
-	* [Beautiful Syntax](#22-beautiful-syntax)
-	* [Type Checking (Courtesy jQuery Core Style Guidelines)](#23-type-checking)
-	* [Conditional Evaluation](#24-conditional-evaluation)
-	* [Practical Style](#25-practical-style)
-	* [Naming](#26-naming)
-	* [Faces of `this`](#27-faces-of-this)
-	* [Misc](#28-misc)
-	* [Native & Host Objects](#29-native--host-objects)
-	* [Comments](#210-comments)
-* [Tests](#3-tests)
-	* [Manual tests](#31-manual-tests)
 
 # 2. Code style guide
 
