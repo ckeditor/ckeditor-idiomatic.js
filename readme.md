@@ -815,72 +815,61 @@ for ( var i = 0; i < length; i++ ) {
 }
 ```
 
-#### 2.6.1. Notation
+#### 2.6.1. Methods and functions
 
-##### 2.6.1.1. Variables, functions, objects
-
-Use `camelCase` notation for naming:
-
-* variables
+Methods and functions are **almost always** verbs/actions in `camelCase` notation:
 
 ```javascript
-var camelCaseVariableName = 'foo!';
+// Good
+execute();
+this.getNextNumber();
+
+// Bad
+this.editable();
+this.status();
 ```
 
-* functions
-```javascript
-function camelCaseFunctionName() {}
-```
-
-* methods
-```javascript
-object.prototype.camelCaseMethodName = function() {};
-```
-
-* objects
-```javascript
-var camelCaseObjectName = {
-	foo: 'foo',
-	bar: function() {}
-};
-```
-
-* instances
-```javascript
-var camelCaseInstance = new Object();
-```
-
-* public members
-```javascript
-CKEDITOR.sth.camelCase = sth;
-```
-
-##### 2.6.1.2. Types
-
-Use `PascalCase` notation for naming constructor function:
+The exception for the above are get/set methods that are used very often, where the first parameter is the thing to get/set and the second is the optional value (set with it and get without):
 
 ```javascript
-function PascalCase () {}
+this.data( 'name' );  // get
+this.data( 'name', 'John' );  // set
 
-PascalCase.prototype = {
-	foo: function() {},
-	bar: function() {}
-};
+this.attr( 'title' );  // get
+this.attr( 'title', 'Flying plane' );  // set
 ```
 
-##### 2.6.1.3. Constants
+#### 2.6.2. Properties and variables
 
-Use `UNDERSCORE_SNAKE_CASE` for naming constant variables:
+Properties and variables are **almost always** nouns in `camelCase` notation:
 
 ```javascript
-// Constant variables.
-var CONSTANT_VARIABLE = 999;
+var editor;
+this.name;
+this.editable;
+```
+Boolean properties and variables are **always** prefixed by an auxiliary verb:
 
-// Constant enum.
-CKEDITOR.sth.CONSTANT_ENUM = 1;
+```javascript
+this.isDirty;
+this.hasChildren;
+this.isFake;
+```
+Properties that require computation can use getters/setters and are named as nouns instead of having them as getXXX() and setXXX() methods when they are programmatically and conceptually simple:
+
+```javascript
+// Good
+this.status; // getter
+editor.setReadOnly( true );
+editor.readOnly;
+
+// Bad
+this.status = x; // setter
+this.setReadOnly( true );
+this.getReadOnly();
 ```
 
-##### 2.6.1.4. Private members
+#### 2.6.3. Private members
 
 Only use underscore `_` name as an object member with private properties:
 
@@ -923,7 +912,19 @@ var object = {
 };
 ```
 
-##### 2.6.1.5. Configuration members
+#### 2.6.4. Constants
+
+Constants are **always** nouns in `UNDERSCORE_SNAKE_CASE` notation:
+
+```javascript
+// Constant variables.
+var CONSTANT_VARIABLE = 999;
+
+// Constant enum.
+CKEDITOR.sth.CONSTANT_ENUM = 1;
+```
+
+#### 2.6.5. Configuration members
 
 If configuration member is a part of core codebase, go with `camelCaseNaming` notation.
 
@@ -935,6 +936,25 @@ If configuration member is a part of [plugin](https://ckeditor.com/docs/ckeditor
 
 ```javascript
 CKEDITOR.config.myPlugin_myProperty = true;
+```
+
+#### 2.6.6. Types
+
+Constructor functions are **always** nouns in `PascalCase` notation:
+
+```javascript
+function PascalCase () {}
+
+PascalCase.prototype = {
+	foo: function() {},
+	bar: function() {}
+};
+```
+
+But should be exposed in `camelCase` notation publicly:
+
+```javascript
+CKEDITOR.pascalCase = PascalCase;
 ```
 
 ### 2.7. Faces of `this`
