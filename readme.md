@@ -234,7 +234,7 @@ square( 10, function( square ) {
 } );
 ```
 
-#### 2.2.2.5. Promises
+##### 2.2.2.5. Promises
 
 Preferably, asynchronous code is written using Promises. It's not always possible when maintaining code, however, prefer Promise based code for new features and everythere where you have control over API structure consumer. Always use `CKEDITOR.tools.promise` instead of native `Promise` object for wider browser support.
 
