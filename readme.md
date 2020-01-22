@@ -1005,7 +1005,7 @@ Object.keys( obj ).forEach( function( key ) {
 // 'qux'
 ```
 
-`thisArg` can be used with `Array.prototype.every`, `Array.prototype.forEach`, `Array.prototype.some`, `Array.prototype.map`, `Array.prototype.filter`.
+`thisArg` can be used with most [Object](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_tools_object.html) and [Array](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_tools_array.html) CKEditor 4 helpers.
 
 #### 2.7.3. Binding `this` to the function scope
 
