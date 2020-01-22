@@ -348,7 +348,7 @@ var module = ( function() {
 
 ##### 2.2.3.2. Helper functions
 
-When extracting helper function, move it right after the first usage inside the nearest scope which won't affect code performance and memory usage. In most cases, you want to keep helper functions on the same scope level as a public one unless they are used somewhere else in the same file.
+When extracting helper function, move it right after the first usage inside the nearest scope which won't affect code performance and memory usage. In most cases, you want to keep helper functions on the same scope level as a public one unless they are used somewhere else in the same file. Do not forget about [public API](#2231-public-api) rule where main code flow have higher priority than private helpers.
 
 ```javascript
 CKEDITOR.module1 = {
@@ -373,6 +373,7 @@ CKEDITOR.module2 = {
 	}
 }
 
+// We are moving helper functions lower in correct order to keep main code flow happy.
 function foo() {
 	baz();
 	quix();
