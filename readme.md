@@ -693,8 +693,7 @@ true, false
 			},
 
 			setData: function( value ) {
-				// Set the value of `data` and return it.
-				return ( data = value );
+				this.value = value;
 			}
 		};
 	} )();
@@ -709,24 +708,43 @@ true, false
 
 ```javascript
 ( function() {
-	function Ctor( foo ) {
-		this.foo = foo;
+	var fooBar = CKEDITOR.tools.createClass( {
+		$: function( foo ) {
+			this.foo = foo;
+		},
+		
+		proto: {
+			getFoo: function() {
+				return this.foo;
+			},
 
-		return this;
-	}
+			setFoo: function( val ) {
+				this.foo = val;
+			}
+		}
+	} );
 
-	CKEDITOR.tools.extend( Ctor.prototype, {
+	// Expose our constructor to the global object.
+	CKEDITOR.fooBar = fooBar;
+} )();
+```
+
+#### 2.5.3. Prototype extension
+
+```javascript
+( function() {
+	var fooBar = CKEDITOR.tools.extend( FooBar.prototype, {
 		getFoo: function() {
 			return this.foo;
 		};
 
 		setFoo: function( val ) {
-			return ( this.foo = val );
+			this.foo = val;
 		};
 	} );
 
 	// Expose our constructor to the global object.
-	CKEDITOR.ctor = Ctor;
+	CKEDITOR.fooBar = fooBar;
 } )();
 ```
 
