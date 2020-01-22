@@ -258,17 +258,42 @@ square( 10, function( square ) {
 ```
 
 ##### 2.2.2.7 Constructor declaration
-```javascript
-function FooBar( options ) {
-	this.options = options;
-}
 
-// Usage.
-var fooBar = new FooBar( {
-	a: 'alpha'
+Prefer using [CKEDITOR.tools.createClass](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_tools.html#method-createClass) API instead of native constructor declaration.
+
+```javascript
+// Good
+var FooBar = CKEDITOR.tools.createClass( {
+	$: function( message ) {
+		this.message = message;
+	},
+	
+	proto: {
+		greeting: function() {
+			console.log( this.message );
+		}
+	}
 } );
 
-fooBar.options; // -> { a: 'alpha' }
+var fooBar = new FooBar( 'Hello, World!' );
+
+fooBar.greeting();
+// 'Hello, World!'
+
+// Bad
+function FooBar( message ) {
+	this.message = message;
+}
+
+FooBar.prototype.greeting = function() {
+	console.log( this.message );
+};
+
+var fooBar = new FooBar( 'Hello, World!' );
+
+fooBar.greeting();
+// 'Hello, World'
+
 ```
 
 #### 2.2.3. Code structure
