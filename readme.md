@@ -70,9 +70,9 @@ if ( condition ) {
 }
 
 if ( true ) {
-  // statements
+	// statements
 } else {
-  // statements
+	// statements
 }
 
 if ( true ) {
