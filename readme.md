@@ -124,19 +124,7 @@ if ( false ) {
 
 #### 2.2.2. Assignments, Declarations, Functions
 
-##### 2.2.2.1. Declaring variables
-
-```javascript
-var foo = 'bar',
-	num = 1,
-	undef;
-
-// Literal notations:
-var array = [],
-	object = {};
-```
-
-##### 2.2.2.2. Single line per declaration
+##### 2.2.2.1. Single line per declaration
 
 Declaring one variable per line improves debugging experience. Multiple variables declared in the same line won't allow you to place breakpoint at the definition computation. The same goes to object literals.
 
@@ -157,7 +145,7 @@ var foo = 'foo',
 
 ```
 
-##### 2.2.2.3. One variable per scope
+##### 2.2.2.2. One variable per scope
 
 Using only one variable per scope (function) promotes readability and keeps your declaration list free of clutter (also saves a few keystrokes). However, if a scope have [early returns](281-early-returns) statements, it will be more readable and performance wise declaring variable later, when definition is needed.
 
@@ -210,7 +198,7 @@ function bar( x ) {
 }
 ```
 
-##### 2.2.2.4. Function declaration
+##### 2.2.2.3. Function declaration
 
 Prefer function declaration instead of function expression to avoid issues with executing function before it has been defined.
 
@@ -230,7 +218,7 @@ var square = function( number ) {
 square( 10 );
 ```
 
-##### 2.2.2.6. Continuation-Passing style
+##### 2.2.2.4. Continuation-Passing style
 
 If your function should be executed asynchorously or requires additional callback (e.g. filter function) as an function argument, pass it as the last argument in function signature. Prefer [Promises](#2227-promises) for asynchronous code when possible.
 
@@ -246,7 +234,7 @@ square( 10, function( square ) {
 } );
 ```
 
-#### 2.2.2.7. Promises
+#### 2.2.2.5. Promises
 
 Preferably, asynchronous code is written using Promises. It's not always possible when maintaining code, however, prefer Promise based code for new features and everythere where you have control over API structure consumer. Always use `CKEDITOR.tools.promise` instead of native `Promise` object for wider browser support.
 
@@ -262,7 +250,7 @@ var promise = new CKEDITOR.tools.promise( function( resolve, reject ) {
 } );
 ```
 
-##### 2.2.2.7 Constructor declaration
+##### 2.2.2.6 Constructor declaration
 
 Prefer using [CKEDITOR.tools.createClass](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_tools.html#method-createClass) API instead of native constructor declaration.
 
