@@ -1051,52 +1051,25 @@ This section will serve to illustrate ideas and concepts that should not be cons
 Early returns promote code readability with negligible performance difference.
 ```javascript
 // Bad:
-function returnLate( foo ) {
-	var ret;
+function returnLate( range ) {
+	var docFragment = range.cloneContents();
 
-	if ( foo ) {
-		ret = 'foo';
-	} else {
-		ret = 'quux';
-	}
-	return ret;
-}
-
-// Good:
-function returnEarly( foo ) {
-	if ( foo ) {
-		return 'foo';
-	}
-	return 'quux';
-}
-
-// Bad:
-function doSthComplex( foo, bar ) {
-	if ( foo ) {
-		// do something
-
-		if ( bar ) {
-			// do something
-		} else {
-			// do something else
-		}
-	}
-}
-
-// Good:
-function doSthComplex( foo, bar ) {
-	if ( !foo ) {
+	if ( range.collapsed ) {
 		return;
 	}
 
-	// do something
+	// ...
+}
 
-	if ( !bar ) {
-		// do something else
+// Good:
+function returnEarly( range ) {
+	if ( range.collapsed ) {
 		return;
 	}
 
-	// do something
+	var docFragment = range.cloneContents();
+
+	// ...
 }
 ```
 
