@@ -2,19 +2,19 @@
 
 **Table of contents**
 
-2. [Code style guide](#2-code-style-guide)
-	2.1. [Whitespace](#21-whitespace)
-	2.2. [Beautiful Syntax](#22-beautiful-syntax)
-	2.3. [Type Checking (Courtesy jQuery Core Style Guidelines)](#23-type-checking)
-	2.4. [Conditional Evaluation](#24-conditional-evaluation)
-	2.5. [Practical Style](#25-practical-style)
-	2.6. [Naming](#26-naming)
-	2.7. [Faces of `this`](#27-faces-of-this)
-	2.8. [Misc](#28-misc)
-	2.9. [Native & Host Objects](#29-native--host-objects)
-	2.10. [Comments](#210-comments)
-3. [Tests](#3-tests)
-	3.1. [Manual tests](#31-manual-tests)
+* [2. Code style guide](#2-code-style-guide)
+	* [2.1. Whitespace](#21-whitespace)
+	* [2.2. Beautiful Syntax](#22-beautiful-syntax)
+	* [2.3. Type Checking (Courtesy jQuery Core Style Guidelines)](#23-type-checking)
+	* [2.4. Conditional Evaluation](#24-conditional-evaluation)
+	* [2.5. Practical Style](#25-practical-style)
+	* [2.6. Naming](#26-naming)
+	* [2.7. Faces of `this`](#27-faces-of-this)
+	* [2.8. Misc](#28-misc)
+	* [2.9. Native & Host Objects](#29-native--host-objects)
+	* [2.10. Comments](#210-comments)
+* [3. Tests](#3-tests)
+	* [3.1. Manual tests](#31-manual-tests)
 
 ## 1. Introduction
 
