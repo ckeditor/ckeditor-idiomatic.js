@@ -1114,6 +1114,7 @@ CKEditor is a widget - an application inside someone's system &ndash; so... do n
 - Use multiline comments only for API documentation.
 - Check the [JSDuck documentation guide](http://dev.ckeditor.com/wiki/CodeDocumentation).
 - You can use JSDuck documentation style for private functions, but then use single line comments.
+- Comments should be **almost always** put above code, not below.
 
 ```javascript
 // Some docs for private functions.
