@@ -478,53 +478,38 @@ undefined:
 variable === undefined
 ```
 
-##### 2.3.2. Coerced Types
+#### 2.3.2. Coerced Types
 
 Use coersion with caution. In most cases prefer explicit type casting than using implicit operator coersion. Note that some practices are more common than the others, so use common sense to choose correct casting method.
 
+##### 2.3.2.1. Boolean coersion
+
+Boolean coersion leveraged by double `!!` is widely adopted in CKEditor 4 codebase and it's one of the exception where you should use implicit coersion to its popularity.
+
+Small explanation how double `!!` works:
+
+1. The first `!` negates value and parses it into boolean value.
+2. The second `!` flips negation.
+
 ```javascript
-var number = 1,
-	string = '1',
-	bool = false;
+var string = 'some string value',
+	object = {
+		foo: 'foo'
+	},
+	number = 0,
+	nothing = null;
 
-number;
-// 1
+!!string
+// true
 
-// Using number to string coersion with normal sentence
-number + 'st place on the podium';
-// '1st place on the podium'
-// ...is fine and readable. But instead of doing...
-number + '';
-// '1'
-// ...prefer explicit parsing to string
-String( number );
-// '1'
-
-string;
-// '1'
-
-// Insead of...
-+string;
-// 1
-// ...prefer explicit parsing to number
-Number( string );
-// 1
-
-bool;
+!!number
 // false
 
-// Insead of...
-+bool;
-// 0
-// ...prefer explicit parsing to number
-Number( bool );
-// 0
+!!object
+// true
 
-// Insead of...
-bool + '';
-// 'false'
-// ...prefer explicit parsing to string
-String( bool );
+!!nothing
+// false
 ```
 
 #### 2.3.3. Coersion practices to avoid
@@ -563,6 +548,62 @@ parseInt( num, 10 );
 
 // Good
 Math.floor( num );
+```
+
+##### 2.3.3.3. String coersion
+
+Do not use empty string concatenation to convert primitive values into strings.
+
+```javascript
+
+// Bad
+number + '';
+
+// Good
+String( number );
+
+var boolean = true;
+
+// Bad
+boolean + '';
+
+// Good
+
+String( boolean );
+```
+
+##### 2.3.3.4. Number coersion
+
+Do not use numeric operators to convert primitive values into numbers.
+
+```javascript
+var string = '5';
+
+// Bad
++string;
+
+// Good
+Number( string );
+
+var boolean = true;
+
+// Bad
++boolean;
+
+// Good
+Number( boolean );
+```
+
+##### 2.3.3.5. Null or undefined coersion 
+
+Do not use double `==` to match both `undefined` and `null` values. Prefer explicit comparison instead.
+
+```javascript
+// Bad
+if ( value == null ) ...
+
+// Good
+if ( foo === null || foo === undefined ) ...
 ```
 
 ### 2.4. Conditional Evaluation
@@ -623,19 +664,15 @@ if ( foo === false ) ...
 
 #### 2.4.4. Boolean ref evaluation
 
+In most cases [Boolean evaluation](#243-boolean-evaluation) for falsy reference is enough, but if you really need to check if value is not `undefined` or `null` (like when `false` is an expected value) preferexplicit comparison. See [Null or undefined coersion](2335-null-or-undefined-coersion).
+
 ```javascript
-// When only evaluating a ref that might be null or undefined,
-// but NOT false, '' or 0, instead of this:
+// When evaluating that reference is null or undefined, prefer explicit comparison:
 if ( foo === null || foo === undefined ) ...
 
-// ...take advantage of == type coercion, like this:
+// instead of == type coersion:
 if ( foo == null ) ...
-
-// Remember, using == will match a `null` to BOTH `null` and `undefined` but not `false`, '' or 0
-null == undefined
 ```
-
-ALWAYS evaluate for the best, most accurate result - the above is a guideline, not a dogma.
 
 #### 2.4.5. Loose equality coersion 
 Use loose equality operator to simplify your code when you want to leverage type coercion. Remember that strict equality comparator `===` is checking if both the type and the value you are comparing are the same. In a constract, loose equality operator `==` will try to do type coersion which may be useful in some cases when comparing values where types are less revelant than values.
