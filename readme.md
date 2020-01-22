@@ -974,29 +974,24 @@ function Selection() {
 	var editor = this.editor;
 
 	// Bad:
-	editor.on( 'setData', someCallback, editor );
+	this.editor.on( 'setData', someCallback, editor );
 
 	// Still bad:
-	editor.on( 'setData', CKEDITOR.tools.bind( someCallback, editor ) );
+	this.editor.on( 'setData', CKEDITOR.tools.bind( someCallback, editor ) );
 
 	// Good:
-	editor.on( 'setData', someCallback, this );
+	this.editor.on( 'setData', someCallback, this );
 
 	// Good:
 	this.getEditor().on( 'setData', function( evt ) {
 		evt.editor.doSomething();
 	} );
-
-	// Good too:
-	var that = this;
-	editor.on( 'setData', function( evt ) {
-		editor.setCurrentSelection( that );
-	} );
 }
 
 function someCallback() {
-	// Should refers to Selection, not Editor.
-	this;
+	// Should refer to Selection, not Editor.
+	var editor = this.editor;
+	// ...
 }
 ```
 
