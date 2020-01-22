@@ -1112,9 +1112,9 @@ CKEditor is a widget - an application inside someone's system &ndash; so... do n
 - Single line above the code that is subject (except for long expressions like conditions).
 - Comment is a sentence - start it with capital leter, end with period.
 - Use multiline comments only for API documentation.
+- Comments should be **almost always** put above code, not below.
 - Check the [JSDuck documentation guide](http://dev.ckeditor.com/wiki/CodeDocumentation).
 - You can use JSDuck documentation style for private functions, but then use single line comments.
-- Comments should be **almost always** put above code, not below.
 
 ```javascript
 // Some docs for private functions.
@@ -1131,6 +1131,15 @@ if ( some != really.complex &&      // Comment line 1.
 	( multiple == !lines ) )        // Comment line 3.
 
 // Of course it's better to avoid this spaghetti at all.
+```
+
+- Fixing a bug should result in additional ticket reference comment written as `(#1345)` comment.
+
+```javascript
+// (#1345)
+if ( requiresPromisePolyfill() ) {
+	// ...
+}
 ```
 
 ## 3. Tests
