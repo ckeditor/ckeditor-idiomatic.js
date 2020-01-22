@@ -212,38 +212,27 @@ function bar( x ) {
 
 ##### 2.2.2.4. Function declaration
 
-Prefer function declaration instead of [function expression](#2225-function-expression) to avoid issues with executing function before it has been defined.
+Prefer function declaration instead of function expression to avoid issues with executing function before it has been defined.
 
 ```javascript
-function foo( arg1, argN ) {
-
-}
-
-// Usage.
-foo( arg1, argN );
-
-// Real life example.
+// Good
 function square( number ) {
 	return number * number;
 }
 
-// Usage.
 square( 10 );
-```
 
-##### 2.2.2.5. Function expression
+// Bad
+var square = function( number ) {
+	return number * number;
+};
 
-Prefer [function declaration](#2224-function-declaration) when possible.
-
-```javascript
-    var square = function( number ) {
-        return number * number;
-    };
+square( 10 );
 ```
 
 ##### 2.2.2.6. Continuation-Passing style
 
-If your function should be executed asynchorously or requires additional callback (e.g. filter function) as an function argument, pass it as the last argument in function signature.
+If your function should be executed asynchorously or requires additional callback (e.g. filter function) as an function argument, pass it as the last argument in function signature. Prefer [Promises](#2227-promises) for asynchronous code when possible.
 
 ```javascript
 // Declaration.
@@ -254,6 +243,22 @@ function square( number, callback ) {
 // Usage.
 square( 10, function( square ) {
 	// callback statements
+} );
+```
+
+#### 2.2.2.7. Promises
+
+Preferably, asynchronous code is written using Promises. It's not always possible when maintaining code, however, prefer Promise based code for new features and everythere where you have control over API structure consumer. Always use `CKEDITOR.tools.promise` instead of native `Promise` object for wider browser support.
+
+```javascript
+var promise = new CKEDITOR.tools.promise( function( resolve, reject ) {
+	var result = getContentFromFileServer( options );
+
+	if ( result.status === 200 ) {
+		resolve( result.data );
+	} else {
+		reject( result.error );
+	}
 } );
 ```
 
