@@ -2,6 +2,8 @@
 
 **Table of contents**
 
+* [1. Introduction](#1-introduction)
+	* [1.1. Mottos](#11-mottos)
 * [2. Code style guide](#2-code-style-guide)
 	* [2.1. Whitespace](#21-whitespace)
 	* [2.2. Beautiful Syntax](#22-beautiful-syntax)
