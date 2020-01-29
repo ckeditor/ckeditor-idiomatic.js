@@ -861,7 +861,7 @@ this.isDirty;
 this.hasChildren;
 this.isFake;
 ```
-Properties that require computation can use getters/setters and are named as nouns instead of having them as getXXX() and setXXX() methods when they are programmatically and conceptually simple:
+Properties that require computation, instead of having them as `getXXX()` and `setXXX()` accessing methods, can be named as nouns, when are programmatically and conceptually simple:
 
 ```javascript
 editor.setStatus( 404 ); // setter
