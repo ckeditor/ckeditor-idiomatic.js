@@ -751,7 +751,7 @@ true, false
 
 ```javascript
 ( function() {
-	var fooBar = CKEDITOR.tools.createClass( {
+	var FooBar = CKEDITOR.tools.createClass( {
 		$: function( foo ) {
 			this.foo = foo;
 		},
@@ -768,7 +768,7 @@ true, false
 	} );
 
 	// Expose our constructor to the global object.
-	CKEDITOR.fooBar = fooBar;
+	CKEDITOR.fooBar = FooBar;
 } )();
 ```
 
@@ -942,21 +942,39 @@ CKEDITOR.config.myPlugin_myProperty = true;
 
 #### 2.6.6. Types
 
+Constructors created with [CKEDITOR.tools.createClass](https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_tools.html#method-createClass) API are **always** nouns in `PascalCase` notation:
+
+```javascript
+var FooBar = CKEDITOR.tools.createClass( {
+	$: function( message ) {
+		this.message = message;
+	},
+	
+	proto: {
+		greeting: function() {
+			console.log( this.message );
+		}
+	}
+} );
+```
 Constructor functions are **always** nouns in `PascalCase` notation:
 
 ```javascript
-function PascalCase () {}
+function FooBar( message ) {
+	this.message = message;
+}
 
-PascalCase.prototype = {
-	foo: function() {},
-	bar: function() {}
+FooBar.prototype = {
+	greeting: function() {
+		console.log( this.message );
+	}
 };
 ```
 
-But should be exposed in `camelCase` notation publicly:
+But should **always** be exposed in `camelCase` notation publicly:
 
 ```javascript
-CKEDITOR.pascalCase = PascalCase;
+CKEDITOR.fooBar = FooBar;
 ```
 
 ### 2.7. Faces of `this`
