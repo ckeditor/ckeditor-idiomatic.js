@@ -601,6 +601,17 @@ if ( value == null ) ...
 if ( foo === null || foo === undefined ) ...
 ```
 
+##### 2.3.3.5 Types coersion
+
+Preserve extra caution using types coersion, where it doesn't make logical sense.
+
+```javascript
+Number( [] );
+// 0
+[] == false
+// true
+```
+
 ### 2.4. Conditional Evaluation
 
 #### 2.4.1. Boolean array evaluation
