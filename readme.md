@@ -288,7 +288,6 @@ var fooBar = new FooBar( 'Hello, World!' );
 
 fooBar.greeting();
 // 'Hello, World'
-
 ```
 
 #### 2.2.3. Code structure
