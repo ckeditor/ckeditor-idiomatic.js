@@ -124,6 +124,16 @@ if ( false ) {
 }
 ```
 
+##### 2.2.1.3. Split long conditional statements
+
+```javascript
+if ( condition1 ||
+	condition2 ||
+	condition3 ) {
+	// statement
+}
+```
+
 #### 2.2.2. Assignments, Declarations, Functions
 
 ##### 2.2.2.1. Single line per declaration
