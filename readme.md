@@ -206,18 +206,18 @@ Prefer function declaration instead of function expression to avoid issues with 
 
 ```javascript
 // Good
+square( 10 );
+
 function square( number ) {
 	return number * number;
 }
 
+// Bad
 square( 10 );
 
-// Bad
 var square = function( number ) {
 	return number * number;
 };
-
-square( 10 );
 ```
 
 ##### 2.2.2.4. Continuation-Passing style
