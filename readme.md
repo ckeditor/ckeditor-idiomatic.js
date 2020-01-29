@@ -222,7 +222,7 @@ var square = function( number ) {
 
 ##### 2.2.2.4. Continuation-Passing style
 
-If your function should be executed asynchronously or requires additional callback (e.g. filter function) as an function argument, pass it as the last argument in function signature. Prefer [Promises](#2227-promises) for asynchronous code when possible.
+If your function should be executed asynchronously or requires additional callback (e.g. filter function) as an function argument, pass it as the last argument in function signature. Prefer [Promises](#2225-promises) for asynchronous code when possible.
 
 ```javascript
 // Declaration.
