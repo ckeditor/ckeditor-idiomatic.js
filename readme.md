@@ -475,11 +475,11 @@ variable === undefined
 
 #### 2.3.2. Coerced Types
 
-Use coersion with caution. In most cases prefer explicit type casting than using implicit operator coersion. Note that some practices are more common than the others, so use common sense to choose correct casting method.
+Use coercion with caution. In most cases prefer explicit type casting than using implicit operator coercion. Note that some practices are more common than the others, so use common sense to choose correct casting method.
 
-##### 2.3.2.1. Boolean coersion
+##### 2.3.2.1. Boolean coercion
 
-Boolean coersion leveraged by double `!!` is widely adopted in CKEditor 4 codebase and it's one of the exception where you should use implicit coersion to its popularity.
+Boolean coercion leveraged by double `!!` is widely adopted in CKEditor 4 codebase and it's one of the exception where you should use implicit coercion to its popularity.
 
 Small explanation how double `!!` works:
 
@@ -507,9 +507,9 @@ var string = 'some string value',
 // false
 ```
 
-#### 2.3.3. Coersion practices to avoid
+#### 2.3.3. Coercion practices to avoid
 
-Avoid using unpopular coersion operators due to lacking readability. Most of them have explicit versions, which are much more readable.
+Avoid using unpopular coercion operators due to lacking readability. Most of them have explicit versions, which are much more readable.
 
 ##### 2.3.3.1. Bitwise NOT operator
 
@@ -545,7 +545,7 @@ parseInt( num, 10 );
 Math.floor( num );
 ```
 
-##### 2.3.3.3. String coersion
+##### 2.3.3.3. String coercion
 
 Do not use empty string concatenation to convert primitive values into strings.
 
@@ -567,7 +567,7 @@ boolean + '';
 String( boolean );
 ```
 
-##### 2.3.3.4. Number coersion
+##### 2.3.3.4. Number coercion
 
 Do not use numeric operators to convert primitive values into numbers.
 
@@ -589,7 +589,7 @@ var boolean = true;
 Number( boolean );
 ```
 
-##### 2.3.3.5. Null or undefined coersion 
+##### 2.3.3.5. Null or undefined coercion 
 
 Do not use double `==` to match both `undefined` and `null` values. Prefer explicit comparison instead.
 
@@ -601,9 +601,9 @@ if ( value == null ) ...
 if ( foo === null || foo === undefined ) ...
 ```
 
-##### 2.3.3.5 Types coersion
+##### 2.3.3.5 Types coercion
 
-Preserve extra caution using types coersion, where it doesn't make logical sense.
+Preserve extra caution using types coercion, where it doesn't make logical sense.
 
 ```javascript
 Number( [] );
@@ -670,18 +670,18 @@ if ( foo === false ) ...
 
 #### 2.4.4. Boolean ref evaluation
 
-In most cases [Boolean evaluation](#243-boolean-evaluation) for falsy reference is enough, but if you really need to check if value is not `undefined` or `null` (like when `false` is an expected value) preferexplicit comparison. See [Null or undefined coersion](2335-null-or-undefined-coersion).
+In most cases [Boolean evaluation](#243-boolean-evaluation) for falsy reference is enough, but if you really need to check if value is not `undefined` or `null` (like when `false` is an expected value) preferexplicit comparison. See [Null or undefined coercion](2335-null-or-undefined-coercion).
 
 ```javascript
 // When evaluating that reference is null or undefined, prefer explicit comparison:
 if ( foo === null || foo === undefined ) ...
 
-// instead of == type coersion:
+// instead of == type coercion:
 if ( foo == null ) ...
 ```
 
-#### 2.4.5. Loose equality coersion 
-Use loose equality operator to simplify your code when you want to leverage type coercion. Remember that strict equality comparator `===` is checking if both the type and the value you are comparing are the same. In a constract, loose equality operator `==` will try to do type coersion which may be useful in some cases when comparing values where types are less revelant than values.
+#### 2.4.5. Loose equality coercion 
+Use loose equality operator to simplify your code when you want to leverage type coercion. Remember that strict equality comparator `===` is checking if both the type and the value you are comparing are the same. In a constract, loose equality operator `==` will try to do type coercion which may be useful in some cases when comparing values where types are less revelant than values.
 
 ```javascript
 false === 'false'
