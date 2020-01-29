@@ -776,18 +776,22 @@ true, false
 
 ```javascript
 ( function() {
-	var fooBar = CKEDITOR.tools.extend( FooBar.prototype, {
+	var FooBar = CKEDITOR.tools.createClass( {
+		// class definition
+	} );
+
+	CKEDITOR.tools.extend( FooBar.prototype, {
 		getFoo: function() {
 			return this.foo;
-		};
+		},
 
 		setFoo: function( val ) {
 			this.foo = val;
-		};
+		}
 	} );
 
-	// Expose our constructor to the global object.
-	CKEDITOR.fooBar = fooBar;
+	// Expose our constructor with extended prototype to the global object.
+	CKEDITOR.fooBar = FooBar;
 } )();
 ```
 
