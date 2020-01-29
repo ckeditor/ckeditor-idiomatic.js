@@ -813,7 +813,7 @@ Here's the same piece of logic, but with kinder, more thoughtful naming (and a r
 ```javascript
 
 function query( selector ) {
-  return document.querySelectorAll( selector );
+	return document.querySelectorAll( selector );
 }
 
 var elements = [],
@@ -1015,16 +1015,20 @@ function someCallback() {
 
 #### 2.7.2. Use `thisArg` argument
 
-Several prototype methods of ES 5.1 built-ins come with a special `thisArg` signature, which should be used whenever possible. CKEditor follows this practice too, so for example [`eventTarget.on`](http://docs.ckeditor.com/#!/api/CKEDITOR.event-method-on) also accepts context as an argument.
+Several prototype methods of ES 5.1 built-ins come with a special `thisArg` signature. CKEditor follows this practice too, which should be used whenever possible. For example [`eventTarget.on`](http://docs.ckeditor.com/#!/api/CKEDITOR.event-method-on) also accepts context as an argument.
 
 ```javascript
-var obj = { f: 'foo', b: 'bar', q: 'qux' };
+var obj = {
+	f: 'foo',
+	b: 'bar',
+	q: 'qux'
+};
 
 Object.keys( obj ).forEach( function( key ) {
 
-  // |this| now refers to `obj`
+	// |this| now refers to `obj`
 
-  console.log( this[ key ] );
+	console.log( this[ key ] );
 
 }, obj ); // <-- the last arg is `thisArg`
 
