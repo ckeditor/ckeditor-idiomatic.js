@@ -864,15 +864,11 @@ this.isFake;
 Properties that require computation can use getters/setters and are named as nouns instead of having them as getXXX() and setXXX() methods when they are programmatically and conceptually simple:
 
 ```javascript
-// Good
+editor.setStatus( 404 ); // setter
 this.status; // getter
-editor.setReadOnly( true );
-editor.readOnly;
 
-// Bad
-this.status = x; // setter
-this.setReadOnly( true );
-this.getReadOnly();
+editor.setReadOnly( true ); // setter
+editor.readOnly; // getter
 ```
 
 #### 2.6.3. Private members
