@@ -242,13 +242,13 @@ Preferably, asynchronous code is written using Promises. It's not always possibl
 
 ```javascript
 var promise = new CKEDITOR.tools.promise( function( resolve, reject ) {
-	var result = getContentFromFileServer( options );
-
-	if ( result.status === 200 ) {
-		resolve( result.data );
-	} else {
-		reject( result.error );
-	}
+    getContentFromFileServer( options, function( result ) {
+        if ( result.status === 200 ) {
+            resolve( result.data );
+        } else {
+            reject( result.error );
+        }
+    } );
 } );
 ```
 
